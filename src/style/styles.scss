@@ -348,7 +348,6 @@ body {
 }
 
 .header {
-  padding-bottom: 15px;
   background-color: #fff;
   padding: 15px 15px 0;
 
@@ -456,7 +455,7 @@ body {
     width: 100%;
     height: 100%;
   }
-  > p {
+  > span {
     @media (max-width: 767px) {
       display: none;
       font-weight: bold;
@@ -481,7 +480,7 @@ body {
   text-rendering: auto;
   line-height: 1;
   &--chat {
-    background-image: url("../assets/Combined_Shape@1x.svg");
+    background-image: url("../../assets/Combined_Shape@1x.svg");
   }
 }
 
