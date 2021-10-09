@@ -250,6 +250,11 @@ body {
   display: none;
 }
 
+.logo-search__search-button {
+  background-color: transparent;
+  cursor: pointer;
+}
+
 .logo-search__search-input {
   width: 100%;
   padding: 5px;

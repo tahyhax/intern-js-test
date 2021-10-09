@@ -203,6 +203,10 @@ body {
       display: none;
     }
   }
+  &__search-button {
+    background-color: transparent;
+    cursor: pointer;
+  }
 
   &__search-input {
     width: 100%;
