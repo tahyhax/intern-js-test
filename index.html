@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/css/styles.css">
+    <meta name="description" content="js intern">
+    <link rel="stylesheet" href="./public/css/styles.css">
+    <link rel="shortcut icon" href="./assets/Logo@3x.svg" type="image/x-icon">
+    <script async src="./main.js" ></script>
     <title>Document</title>
 </head>
 <body>
@@ -14,7 +17,7 @@
             <div class="sidebar__logo-search logo-search">
                 <div class="logo-search__logo">
                     <img class="logo-search__logo-img" src="./assets/Logo@3x.svg" alt="sidebar-logo">
-                    <h3 class="logo-search__logo-title">Projectus</h3>
+                    <h1 class="logo-search__logo-title">Projectus</h1>
                 </div>
                 <form class="logo-search__search">
                     <div class="logo-search__search-icon">
@@ -36,11 +39,11 @@
                     </div>
                 </div>
                 <div class="user-info__dots">
-                    <button class="dots">
+                    <div class="dots">
                         <span class="dots__item"></span>
                         <span class="dots__item"></span>
                         <span class="dots__item"></span>
-                    </button>
+                    </div>
                 </div>
             </div>
             <div class="sidebar__tasks">
@@ -55,7 +58,7 @@
             </div>
             <div class="sidebar__menu">
                 <nav class="menu">
-                    <h3 class="menu__header">Menu</h3>
+                    <p class="menu__header">Menu</p>
                     <ul class="menu__body">
                         <li class="menu__item"><a class="menu__link" href="#">Home</a></li>
                         <li class="menu__item"><a class="menu__link" href="#">My Tasks</a></li>
@@ -79,15 +82,15 @@
                             <img width="40" height="40" src="./assets/Shapes@2x.png" alt='Website Redesign'>
                         </div>
 
-                        <p class="header__logo-title">W<span>ebsite</span> R<span>edesign</span>
-                        </p>
+                        <h2 class="header__logo-title">W<span>ebsite</span> R<span>edesign</span>
+                        </h2>
                         <div class="header__logo-button">
 
-                            <button class="dots">
+                            <div class="dots">
                                 <span class="dots__item"></span>
                                 <span class="dots__item"></span>
                                 <span class="dots__item"></span>
-                            </button>
+                            </div>
                         </div>
                     </div>
                     <div class="header__action header-action">
@@ -109,9 +112,9 @@
                             </li>
                         </ul>
                         <div class="header-action__button">
-                            <a href="#" class="button header-action__button-item">S <p>hare</p></a>
-                            <a href="#" class="button button--chat"><i class="button__icon ico ico--chat"></i>
-                                <p>Chat</p></a>
+                            <button href="#" name='share' class="button header-action__button-item">S <span>hare</span></button>
+                            <button href="#" name='chat' class="button button--chat"><i class="button__icon ico ico--chat"></i>
+                                <span>Chat</span></button>
                         </div>
                     </div>
                 </div>
@@ -182,11 +185,11 @@
                                     </div>
                                     <div class="chat__message-attachment">
                                         <a class="chat__message-attachment-item" href="#"><img
-                                            src="https://via.placeholder.com/100?text=Visit+Blogging.com+Now C/O" alt="image"></a>
+                                            src="https://via.placeholder.com/100?text=Visit+Blogging.com+Now+C/O" alt="image"></a>
                                         <a class="chat__message-attachment-item" href="#"><img
-                                            src="https://via.placeholder.com/100?text=Visit+Blogging.com+Now C/O" alt="image"></a>
+                                            src="https://via.placeholder.com/100?text=Visit+Blogging.com+Now+C/O" alt="image"></a>
                                         <a class="chat__message-attachment-item" href="#"><img
-                                            src="https://via.placeholder.com/100?text=Visit+Blogging.com+Now C/O" alt="image"></a>
+                                            src="https://via.placeholder.com/100?text=Visit+Blogging.com+Now+C/O" alt="image"></a>
                                     </div>
                                 </div>
                                 <div class="chat__message-time">6:02 PM</div>
@@ -198,6 +201,6 @@
         </div>
     </div>
 </div>
-<script src="./main.js"></script>
+
 </body>
 </html>

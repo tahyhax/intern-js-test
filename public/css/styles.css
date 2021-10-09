@@ -589,7 +589,7 @@ body {
 }
 
 @media (max-width: 767px) {
-  .button > p {
+  .button > span {
     display: none;
     font-weight: bold;
   }
@@ -615,7 +615,7 @@ body {
 }
 
 .ico--chat {
-  background-image: url("../../assets/Combined_Shape@1x.svg");
+  background-image: url("../assets/Combined_Shape@1x.svg");
 }
 
 .nav {
