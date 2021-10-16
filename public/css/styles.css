@@ -99,6 +99,12 @@ body {
   padding: 0 20px 0 30px;
 }
 
+@media (min-width: 767px) {
+  .sidebar__tasks-item {
+    cursor: pointer;
+  }
+}
+
 .sidebar__tasks-item:last-child {
   margin-left: 20px;
 }
@@ -829,6 +835,8 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -ms-flex-item-align: self-start;
       align-self: self-start;
   margin: 0 -5px;
@@ -837,6 +845,7 @@ body {
 
 .chat__message-attachment-item {
   padding: 0 5px;
+  margin-bottom: 10px;
 }
 
 .chat__message-attachment-item > img {

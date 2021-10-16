@@ -83,6 +83,9 @@ body {
   }
 
   &__tasks-item {
+    @media (min-width: 767px) {
+      cursor: pointer;
+    }
     &:last-child {
       margin-left: 20px;
     }
@@ -628,12 +631,14 @@ body {
   }
   &__message-attachment {
     display: flex;
+    flex-wrap: wrap;
     align-self: self-start;
     margin: 0 -5px;
     margin-top: 20px;
   }
   &__message-attachment-item {
     padding: 0 5px;
+    margin-bottom: 10px;
     & > img {
       border-radius: 8px;
     }
