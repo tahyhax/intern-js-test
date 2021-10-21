@@ -77,8 +77,8 @@ tasks.forEach(task => {
     let type = this.dataset.type
     let confirmMessage = `Are you sure you want to change the number of tasks?`;
     const {tasks:tasksValue} = data;
-
-    if (!tasksValue.open || !tasksValue.complited) {
+    const typeToValidate = type === 'complited' ?  'open': 'complited'; 
+    if (!tasksValue[typeToValidate]) {
       alert(`All tasks are ${type} !`)
       return false;
     }
@@ -87,8 +87,8 @@ tasks.forEach(task => {
       return false;
     }
 
-    tasksValue.open = type == 'complited' ? tasksValue.open - 1 : tasksValue.open + 1
-    tasksValue.complited = type == 'open' ? tasksValue.complited - 1 : tasksValue.complited + 1
+    tasksValue.open = type === 'complited' ? tasksValue.open - 1 : tasksValue.open + 1
+    tasksValue.complited = type === 'open' ? tasksValue.complited - 1 : tasksValue.complited + 1
     
     tasks.forEach(task => {
       task.querySelector('.sidebar__tasks-title').innerText = tasksValue[task.dataset.type]
