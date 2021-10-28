@@ -1,0 +1,35 @@
+<template>
+  <div class="dots">
+    <span class="dots__item"></span>
+    <span class="dots__item"></span>
+    <span class="dots__item"></span>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'Dots'
+})
+</script>
+
+<style lang="scss" scoped>
+.dots {
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+
+  &__item {
+    height: 4px;
+    width: 4px;
+    background: #9b9b9b;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 1px;
+  }
+}
+</style>
