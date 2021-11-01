@@ -1,60 +1,45 @@
-<template>
-  <aside id="sidebar" class="sidebar sidebar-container">
-    <div class="sidebar__logo-search logo-search">
-      <div class="logo-search__logo">
-        <img class="logo-search__logo-img" src="../assets/Logo@3x.svg" alt="sidebar-logo">
-        <h1 class="logo-search__logo-title">Projectus</h1>
-      </div>
-      <form class="logo-search__search">
-        <div class="logo-search__search-icon">
-          <button name="search" class="logo-search__search-button"><img src="../assets/Search@3x.svg"
-                                                                        alt="search">
-          </button>
-        </div>
-        <input type="text" id="s" class="logo-search__search-input logo-search__search-input--hidden"
-               placeholder="Search"/>
-      </form>
-    </div>
-    <div class="sidebar__user-info user-info">
-      <div class="user-info__about">
-        <div class="user-info__logo logo logo--big">
-          <img src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="Jean Gonzales">
-        </div>
-        <div class="user-info__about-text">
-          <p class="user-info__text--fname">{{ fullname }}</p>
-          <p class="user-info__text--job">{{ user.position }}</p>
-        </div>
-      </div>
-      <div class="user-info__dots">
-        <Dots/>
-      </div>
-    </div>
-    <div class="sidebar__tasks">
-      <div class="sidebar__tasks-item" data-type="complited">
-        <p class="sidebar__tasks-title">{{ user.tasks.complete }}</p>
-        <p class="sidebar__tasks-subtitle">Completed Tasks</p>
-      </div>
-      <div class="sidebar__tasks-item" data-type="open">
-        <p class="sidebar__tasks-title">{{ user.tasks.open }}</p>
-        <p class="sidebar__tasks-subtitle">Open Tasks</p>
-      </div>
-    </div>
-    <div class="sidebar__menu">
-      <nav class="menu">
-        <p class="menu__header">Menu</p>
-        <ul class="menu__body">
-          <li class="menu__item"><a class="menu__link" href="#">Home</a></li>
-          <li class="menu__item"><a class="menu__link" href="#">My Tasks</a></li>
-          <li class="menu__item"><a class="menu__link" href="#">Notifications</a>
-            <span class="menu__item-count"><span id='notifictions-count'>{{
-                user.notifications
-              }}</span></span>
-          </li>
-        </ul>
-      </nav>
-    </div>
-
-  </aside>
+<template lang="pug">
+aside#sidebar.sidebar.sidebar-container
+  .sidebar__logo-search.logo-search
+    .logo-search__logo
+      img.logo-search__logo-img(src="../assets/Logo@3x.svg" alt="sidebar-logo")
+      h1.logo-search__logo-title
+      | Projectus
+    form.logo-search__search
+      .logo-search__search-icon
+        button.logo-search__search-button( name="search")
+          img( src="../assets/Search@3x.svg" alt="search")
+      input.logo-search__search-input.logo-search__search-input--hidden(type="text" placeholder="Search")
+  div.sidebar__user-info.user-info
+    .user-info__about
+      .user-info__logo.logo.logo--big
+        img(src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="Jean Gonzales")
+      .user-info__about-text
+        p.user-info__text--fname {{ fullname }}
+        p.user-info__text--job {{ user.position }}
+    .user-info__dots
+      <Dots/>
+  .sidebar__tasks
+    .sidebar__tasks-item
+      p.sidebar__tasks-title {{ user.tasks.complete }}
+      p.sidebar__tasks-subtitle
+        | Completed Tasks
+    .sidebar__tasks-item
+      p.sidebar__tasks-title {{ user.tasks.open }}
+      p.sidebar__tasks-subtitle
+        | Open Tasks
+  .sidebar__menu
+    nav.menu
+      p.menu__header Menu
+      ul.menu__body
+        li.menu__item
+          a.menu__link(href="#") Home
+        li.menu__item
+          a.menu__link(href="#") My Tasks
+        li.menu__item
+          a.menu__link(href="#") Notifications
+          span.menu__item-count
+            span {{ user.notifications }}
 </template>
 
 <script lang="ts">

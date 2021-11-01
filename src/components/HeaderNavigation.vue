@@ -1,23 +1,23 @@
-<template>
-  <ul class="nav">
-    <li class="nav__item">
-      <router-link class="nav__link"
-                   :to="{name:'Tasks'}"
-                   active-class="nav__link--active"
-      >Tasks
-      </router-link>
-    </li>
-    <li class="nav__item"><a href="#" class="nav__link">Kanban</a></li>
-    <li class="nav__item">
-      <router-link class="nav__link"
-                   :to="{name:'Activity'}"
-                   active-class="nav__link--active"
-      >Activity
-      </router-link>
-    </li>
-    <li class="nav__item"><a href="#" class="nav__link">Calendar</a></li>
-    <li class="nav__item"><a href="#" class="nav__link">Files</a></li>
-  </ul>
+<template lang="pug">
+ul.nav
+  li.nav__item
+    router-link( class="nav__link"
+                 :to={name:'Tasks'}
+                 active-class="nav__link--active")
+      | Tasks
+  li.nav__item
+    a.nav__link(href="#") Kanban
+  li.nav__item
+    router-link(class="nav__link"
+                 :to="{name:'Activity'}"
+                 active-class="nav__link--active")
+      | Activity
+  li.nav__item
+    a.nav__link( href="#")
+      | Calendar
+  li.nav__item
+    a.nav__link( href="#")
+      | Files
 </template>
 
 <script>

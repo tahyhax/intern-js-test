@@ -1,15 +1,12 @@
-<template>
-  <div class="wrapper">
-    <div class="container">
-      <Sidebar :user='user'/>
-      <div class="main-block">
-        <Header/>
-        <section class="main-block__content">
-          <router-view/>
-        </section>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+.wrapper
+  .container
+    Sidebar(:user='user')/
+    .main-block
+      Header/
+      section.main-block__content
+        router-view/
+
 </template>
 
 <script>
@@ -100,6 +97,7 @@ body {
     max-width: none;
   }
 }
+
 .main-block {
   display: flex;
   flex: 1;
