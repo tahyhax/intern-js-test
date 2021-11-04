@@ -1,9 +1,9 @@
-<template>
-  <div class="dots">
-    <span class="dots__item"></span>
-    <span class="dots__item"></span>
-    <span class="dots__item"></span>
-  </div>
+<template lang="pug">
+.dots
+  span.dots__item
+  span.dots__item
+  span.dots__item
+
 </template>
 
 <script>

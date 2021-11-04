@@ -1,50 +1,42 @@
-<template>
-  <header class="header">
-    <div class="header__logo-action">
-      <div class="header__logo">
-        <div id="burger" class="burger">
-          <div class="burger__item"></div>
-        </div>
-        <div class="header__logo-icon">
-          <img width="40" height="40" src="../assets/Shapes@2x.png" alt='Website Redesign'>
-        </div>
-        <h2 class="header__logo-title">W<span>ebsite</span> R<span>edesign</span>
-        </h2>
-        <div class="header__logo-button">
-          <Dots/>
-        </div>
-      </div>
-      <div class="header__action header-action">
-        <ul class="header-action__avatar">
-          <li class="header-action__avatar-item logo">
-            <a href="#" class="logo__link">
-              <img src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar">
-            </a>
-          </li>
-          <li class="header-action__avatar-item logo">
-            <a href="#" class="logo__link">
-              <img src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar">
-            </a>
-          </li>
-          <li class="header-action__avatar-item logo">
-            <a href="#" class="logo__link">
-              <img src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar">
-            </a>
-          </li>
-        </ul>
-        <div class="header-action__button">
-          <button name='share' class="button header-action__button-item">S <span>hare</span>
-          </button>
-          <button name='chat' class="button button--chat"><i
-            class="button__icon ico ico--chat"></i>
-            <span>Chat</span></button>
-        </div>
-      </div>
-    </div>
-    <div class="header__nav">
-      <Header-Navigation/>
-    </div>
-  </header>
+<template lang="pug">
+header.header
+  .header__logo-action
+    .header__logo
+      #burger.burger
+        .burger__item
+      .header__logo-icon
+        img( width="40" height="40" src="~@/assets/Shapes@2x.png" alt='Website Redesign')
+      h2.header__logo-title
+        | W
+        span
+          | ebsite &nbsp;
+        | R
+        span
+          | edesign
+      .header__logo-button
+        Dots/
+    .header__action.header-action
+      ul.header-action__avatar
+        li.header-action__avatar-item.logo
+          a.logo__link(href="#")
+            img( src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar")
+        li.header-action__avatar-item.logo
+          a.logo__link( href="#")
+            img( src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar")
+        li.header-action__avatar-item.logo
+          a.logo__link(href="#")
+            img( src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar")
+      .header-action__button
+        button.button.header-action__button-item( name='share')
+          | S
+          span
+          | hare
+        button.button.button--chat(name='chat')
+          i.button__icon.ico.ico--chat
+          span
+            | Chat
+  .header__nav
+    HeaderNavigation/
 </template>
 
 <script>

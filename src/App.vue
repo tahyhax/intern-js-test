@@ -1,18 +1,15 @@
-<template>
-  <div class="wrapper">
-    <div class="container">
-      <Sidebar :user='user'/>
-      <div class="main-block">
-        <Header/>
-        <section class="main-block__content">
-          <router-view/>
-        </section>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+.wrapper
+  .container
+    Sidebar(:user='user' @updateTasks="updateTasks")/
+    .main-block
+      Header/
+      section.main-block__content
+        router-view/
+
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 import Sidebar from '@/components/Sidebar.vue'
 import Header from '@/components/Header.vue'
@@ -37,8 +34,27 @@ export default defineComponent({
         }
       }
     }
-  }
+  },
+  methods: {
+    updateTasks (type: 'complete'|'open') {
+      const revertType = type === 'complete' ? 'open' : 'complete'
+      const messageConfirm = 'Are you sure you want to change the number of tasks?'
+      if (this.validateTask(type)) {
+        const messageError = `All tasks are ${revertType} !`
+        alert(messageError)
+        return false
+      }
 
+      if (confirm(messageConfirm)) {
+        this.user.tasks[type]--
+        this.user.tasks[revertType]++
+      }
+    },
+    validateTask (type: 'complete'|'open'):boolean {
+      return !this.user.tasks[type]
+    }
+
+  }
 })
 </script>
 <style lang="scss">
@@ -100,6 +116,7 @@ body {
     max-width: none;
   }
 }
+
 .main-block {
   display: flex;
   flex: 1;
