@@ -40,7 +40,7 @@ export default defineComponent({
       const revertType = type === 'complete' ? 'open' : 'complete'
       const messageConfirm = 'Are you sure you want to change the number of tasks?'
       if (this.validateTask(type)) {
-        const messageError = `All tasks are ${type} !`
+        const messageError = `All tasks are ${revertType} !`
         alert(messageError)
         return false
       }
