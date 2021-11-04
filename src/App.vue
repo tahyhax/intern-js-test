@@ -1,7 +1,7 @@
 <template lang="pug">
 .wrapper
   .container
-    Sidebar(:user='user')/
+    Sidebar(:user='user' @updateTasks="updateTasks")/
     .main-block
       Header/
       section.main-block__content
@@ -9,7 +9,7 @@
 
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 import Sidebar from '@/components/Sidebar.vue'
 import Header from '@/components/Header.vue'
@@ -34,8 +34,27 @@ export default defineComponent({
         }
       }
     }
-  }
+  },
+  methods: {
+    updateTasks (type: 'complete'|'open') {
+      const revertType = type === 'complete' ? 'open' : 'complete'
+      const messageConfirm = 'Are you sure you want to change the number of tasks?'
+      if (this.validateTask(type)) {
+        const messageError = `All tasks are ${type} !`
+        alert(messageError)
+        return false
+      }
 
+      if (confirm(messageConfirm)) {
+        this.user.tasks[type]--
+        this.user.tasks[revertType]++
+      }
+    },
+    validateTask (type: 'complete'|'open'):boolean {
+      return !this.user.tasks[type]
+    }
+
+  }
 })
 </script>
 <style lang="scss">

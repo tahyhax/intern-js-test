@@ -21,11 +21,11 @@ aside#sidebar.sidebar.sidebar-container
       <Dots/>
   .sidebar__tasks
     .sidebar__tasks-item
-      p.sidebar__tasks-title {{ user.tasks.complete }}
+      p.sidebar__tasks-title(@click="updateCompletedTasks") {{ user.tasks.complete }}
       p.sidebar__tasks-subtitle
         | Completed Tasks
     .sidebar__tasks-item
-      p.sidebar__tasks-title {{ user.tasks.open }}
+      p.sidebar__tasks-title(@click="updateOpenTasks") {{ user.tasks.open }}
       p.sidebar__tasks-subtitle
         | Open Tasks
   .sidebar__menu
@@ -58,6 +58,15 @@ export default defineComponent({
   computed: {
     fullname (): string {
       return `${this.user.lastname}  ${this.user.firstname}`
+    }
+  },
+
+  methods: {
+    updateCompletedTasks (): void {
+      this.$emit('updateTasks', 'complete')
+    },
+    updateOpenTasks (): void {
+      this.$emit('updateTasks', 'open')
     }
   }
 
