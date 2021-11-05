@@ -1,7 +1,7 @@
 import { ITask } from '@/types/task'
 
 export interface IUser {
-    lastname: number,
+    lastname: string,
     firstname: string,
     position: string,
     logo: ?string,
