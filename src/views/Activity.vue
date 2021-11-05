@@ -15,7 +15,9 @@
             p {{ activity.text }}
           template(v-if="activity.attachments")
             .activity__message-attachment
-              a.activity__message-attachment-item(href="#" v-for="(attachment, key) in activity.attachments" :key="key")
+              a.activity__message-attachment-item(href="#" v-for="(attachment, key) in activity.attachments"
+                :key="key"
+                @click="notificationIndex(key)")
                 img(:src="attachment.src" :alt="attachment.description")
         .activity__message-time {{ activity.created }}
 </template>
@@ -65,6 +67,12 @@ export default defineComponent({
             }
           ]
         }]
+    }
+  },
+  methods: {
+    notificationIndex (index:number):void {
+      debugger
+      this.$emit('notificationIndex', index)
     }
   }
 })

@@ -5,7 +5,7 @@
     .main-block
       Header/
       section.main-block__content
-        router-view/
+        router-view(@click="notificationIndex")/
 
 </template>
 
@@ -52,6 +52,9 @@ export default defineComponent({
     },
     validateTask (type: 'complete'|'open'):boolean {
       return !this.user.tasks[type]
+    },
+    notificationIndex (): void {
+      // TODO cant  catch index param from emit
     }
 
   }
