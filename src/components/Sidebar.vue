@@ -43,15 +43,16 @@ aside#sidebar.sidebar.sidebar-container
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import Dots from '@/components/Dots.vue'
+import { IUser } from '@/types/user'
 
 export default defineComponent({
   name: 'Sidebar',
   props: {
     user: {
       required: true,
-      type: Object
+      type: Object as PropType<IUser>
     }
   },
   components: { Dots },

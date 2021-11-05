@@ -71,7 +71,6 @@ export default defineComponent({
   },
   methods: {
     notificationIndex (index:number):void {
-      debugger
       this.$emit('notificationIndex', index)
     }
   }
