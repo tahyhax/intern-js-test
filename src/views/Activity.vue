@@ -1,35 +1,23 @@
-<template>
-  <div class="activity">
-    <header class="activity__header">
-      <h3>Today</h3>
-    </header>
-    <div class="activity__body">
-      <div class="activity__message" v-for="(activity, key) in activities"
-           :key="key"
-           :class="{'activity__message--answer': activity.type === 'answer'}">
-        <template v-if="activity.type !== 'answer'">
-          <div class="activity__message-icon" :class="'activity__message-icon--' + activity.type">
-            <img src="@/assets/Icon@3x.svg">
-          </div>
-        </template>
-        <div class="activity__message-body">
-          <div class="activity__message-content">
-            <div class="activity__message-text">
-              <p> {{ activity.text }}</p>
-            </div>
-            <template v-if="activity.attachments">
-              <div class="activity__message-attachment" >
-                <a class="activity__message-attachment-item" href="#" v-for="(attachment, key) in activity.attachments" :key="key">
-                  <img :src="attachment.src" :alt="attachment.description" data-key="0">
-                </a>
-              </div>
-            </template>
-          </div>
-          <div class="activity__message-time">{{ activity.created }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+.activity
+  header.activity__header
+    h3 Today
+  .activity__body
+    .activity__message( v-for="(activity, key) in activities"
+         :key="key"
+         :class="{'activity__message--answer': activity.type === 'answer'}")
+      template(v-if="activity.type !== 'answer'")
+        .activity__message-icon(:class="'activity__message-icon--' + activity.type")
+          img(src="@/assets/Icon@3x.svg")
+      .activity__message-body
+        .activity__message-content
+          .activity__message-text
+            p {{ activity.text }}
+          template(v-if="activity.attachments")
+            .activity__message-attachment
+              a.activity__message-attachment-item(href="#" v-for="(attachment, key) in activity.attachments" :key="key")
+                img(:src="attachment.src" :alt="attachment.description")
+        .activity__message-time {{ activity.created }}
 </template>
 
 <script lang="ts">

@@ -1,25 +1,17 @@
-<template>
-  <div class="task">
-    <header class="task__header">
-      <h3>Today</h3>
-    </header>
-    <div class="task__body">
-      <div class="task__message" v-for="(task, key) in tasks"
-           :key="key">
-          <div class="task__message-icon" :class="'task__message-icon--' + task.type">
-            <img src="@/assets/Icon@3x.svg">
-          </div>
-        <div class="task__message-body">
-          <div class="task__message-content">
-            <div class="task__message-text">
-              <p> {{ task.text }}</p>
-            </div>
-          </div>
-          <div class="task__message-time">{{ task.created }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+.task
+  header.task__header
+    h3 Today
+  .task__body
+    .task__message(v-for="(task, key) in tasks"
+         :key="key")
+        .task__message-icon(:class="'task__message-icon--' + task.type")
+          img(src="@/assets/Icon@3x.svg")
+        .task__message-body
+          .task__message-content
+            .task__message-text
+              p {{ task.text }}
+          .task__message-time {{ task.created }}
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'

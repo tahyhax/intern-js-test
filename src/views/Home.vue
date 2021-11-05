@@ -106,16 +106,6 @@ export default defineComponent({
   name: 'Home',
   data () {
     return {
-      // user: {
-      //   lastname: 'Jean',
-      //   firstname: 'Gonzales',
-      //   position: 'Product Owner',
-      //   notifications: 3,
-      //   tasks: {
-      //     open: 11,
-      //     complited: 372
-      //   }
-      // },
       activities: [
         {
           text: 'Darika Samak mark as done Listing on Product Hunt so that we can reach as many potential users',
