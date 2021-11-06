@@ -1,9 +1,9 @@
 <template lang="pug">
 .wrapper
   .container
-    Sidebar(:user='user' @updateTasks="updateTasks")/
+    the-sidebar(:user='user' @updateTask="updateTask")/
     .main-block
-      Header/
+      the-header/
       section.main-block__content
         router-view(@click="notificationIndex")/
 
@@ -11,14 +11,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Sidebar from '@/components/Sidebar.vue'
-import Header from '@/components/Header.vue'
+import TheSidebar from '@/components/TheSidebar.vue'
+import TheHeader from '@/components/TheHeader.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    Sidebar,
-    Header
+    TheSidebar,
+    TheHeader
   },
   data () {
     return {
@@ -28,7 +28,7 @@ export default defineComponent({
         position: 'Product Owner',
         logo: '../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg', // NOTE  how  this  work
         notifications: 3,
-        tasks: {
+        task: {
           open: 11,
           complete: 372
         }
@@ -36,7 +36,7 @@ export default defineComponent({
     }
   },
   methods: {
-    updateTasks (type: 'complete'|'open') {
+    updateTask (type: 'complete'|'open') {
       const revertType = type === 'complete' ? 'open' : 'complete'
       const messageConfirm = 'Are you sure you want to change the number of tasks?'
       if (this.validateTask(type)) {
@@ -46,12 +46,12 @@ export default defineComponent({
       }
 
       if (confirm(messageConfirm)) {
-        this.user.tasks[type]--
-        this.user.tasks[revertType]++
+        this.user.task[type]--
+        this.user.task[revertType]++
       }
     },
     validateTask (type: 'complete'|'open'):boolean {
-      return !this.user.tasks[type]
+      return !this.user.task[type]
     },
     notificationIndex (): void {
       // TODO cant  catch index param from emit

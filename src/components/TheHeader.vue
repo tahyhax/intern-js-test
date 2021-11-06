@@ -14,67 +14,48 @@ header.header
         span
           | edesign
       .header__logo-button
-        Dots/
+        app-dots/
     .header__action.header-action
       ul.header-action__avatar
-        li.header-action__avatar-item.logo
-          a.logo__link(href="#")
-            img( src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar")
-        li.header-action__avatar-item.logo
-          a.logo__link( href="#")
-            img( src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar")
-        li.header-action__avatar-item.logo
-          a.logo__link(href="#")
-            img( src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar")
+        li.header-action__avatar-item
+          app-avatar.logo
+            a.logo__link(href="#")
+              img( src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar")
+        li.header-action__avatar-item
+          app-avatar.logo
+            a.logo__link( href="#")
+              img( src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar")
+        li.header-action__avatar-item
+          app-avatar.logo
+            a.logo__link(href="#")
+              img( src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="avatar")
       .header-action__button
-        button.button.header-action__button-item( name='share')
+        app-button.header-action__button-item( name='share')
           | S
           span
-          | hare
-        button.button.button--chat(name='chat')
+            | hare
+        app-button.button--chat(name='chat')
           i.button__icon.ico.ico--chat
           span
             | Chat
   .header__nav
-    HeaderNavigation/
+    the-header-navigation/
 </template>
 
 <script>
 import { defineComponent } from 'vue'
-import Dots from '@/components/Dots.vue'
-import HeaderNavigation from '@/components/HeaderNavigation.vue'
+import AppDots from '@/components/ui/AppDots.vue'
+import TheHeaderNavigation from '@/components/TheHeaderNavigation.vue'
+import AppButton from '@/components/ui/AppButton.vue'
+import AppAvatar from '@/components/ui/AppAvatar.vue'
 
 export default defineComponent({
-  name: 'Header',
-  components: { Dots, HeaderNavigation }
+  name: 'TheHeader',
+  components: { AppButton, AppAvatar, AppDots, TheHeaderNavigation }
 })
 </script>
 
 <style lang="scss" scoped>
-.logo {
-  border-radius: 50%;
-  overflow: hidden;
-
-  width: 25px;
-  height: 25px;
-  @media (min-width: 768px) {
-    width: 30px;
-    height: 30px;
-  }
-
-  &__link {
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-
-  &--big {
-    width: 50px;
-    height: 50px;
-  }
-}
 
 .header {
   background-color: #fff;
@@ -167,44 +148,6 @@ export default defineComponent({
     @media (min-width: 767px) {
       margin-right: 15px;
     }
-  }
-}
-
-.button {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 30px;
-  height: 30px;
-  background: #eaeaea;
-  font-size: 14px;
-  color: #131313;
-  padding: 0;
-  border-radius: 50%;
-
-  @media (min-width: 767px) {
-    border-radius: 15px;
-    padding: 7px 15px;
-    width: 100%;
-    height: 100%;
-  }
-
-  > span {
-    @media (max-width: 767px) {
-      display: none;
-      font-weight: bold;
-    }
-  }
-
-  &__icon {
-    width: 15px;
-    height: 15px;
-    margin-right: 5px;
-  }
-
-  &--chat {
-    color: #ffc200;
-    background: #fff8dd;
   }
 }
 
