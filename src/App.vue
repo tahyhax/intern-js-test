@@ -4,7 +4,7 @@ the-layout
     the-sidebar(:user='user' @updateTask="updateTask")/
   template(v-slot:header)
     the-header/
-  template(v-slot:content)
+  template(v-slot:default)
     router-view(@click="notificationIndex")/
 </template>
 
@@ -37,7 +37,7 @@ export default defineComponent({
     }
   },
   methods: {
-    updateTask (type: 'complete'|'open') {
+    updateTask (type: 'complete' | 'open') {
       const revertType = type === 'complete' ? 'open' : 'complete'
       const messageConfirm = 'Are you sure you want to change the number of tasks?'
       if (this.validateTask(type)) {
@@ -51,7 +51,7 @@ export default defineComponent({
         this.user.task[revertType]++
       }
     },
-    validateTask (type: 'complete'|'open'):boolean {
+    validateTask (type: 'complete' | 'open'): boolean {
       return !this.user.task[type]
     },
     notificationIndex (): void {

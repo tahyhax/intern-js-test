@@ -5,7 +5,7 @@
     .main-block
       slot(name='header')
       section.main-block__content
-        slot(name='content')
+        slot
 </template>
 
 <script>
