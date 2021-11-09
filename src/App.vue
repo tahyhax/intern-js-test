@@ -1,22 +1,23 @@
 <template lang="pug">
-.wrapper
-  .container
+the-layout
+  template(v-slot:sidebar)
     the-sidebar(:user='user' @updateTask="updateTask")/
-    .main-block
-      the-header/
-      section.main-block__content
-        router-view(@click="notificationIndex")/
-
+  template(v-slot:header)
+    the-header/
+  template(v-slot:content)
+    router-view(@click="notificationIndex")/
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import TheLayout from '@/components/TheLayout.vue'
 import TheSidebar from '@/components/TheSidebar.vue'
 import TheHeader from '@/components/TheHeader.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
+    TheLayout,
     TheSidebar,
     TheHeader
   },
@@ -103,38 +104,4 @@ body {
   font-family: Helvetica, sans-serif;
 }
 
-.wrapper {
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-}
-
-.container {
-  max-width: 100%;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  @media (max-width: 767px) {
-    max-width: none;
-  }
-}
-
-.main-block {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-
-  &__content {
-    background-color: #eeebe5;
-    overflow-y: auto;
-    height: 100vh;
-    @media (min-width: 768px) {
-      padding-top: 30px;
-      display: flex;
-      flex: 1;
-      justify-content: center;
-    }
-  }
-}
 </style>
