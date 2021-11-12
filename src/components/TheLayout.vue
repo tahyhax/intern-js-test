@@ -10,15 +10,9 @@
 
 <script>
 import { defineComponent } from 'vue'
-import TheSidebar from '@/components/TheSidebar.vue'
-import TheHeader from '@/components/TheHeader.vue'
 
 export default defineComponent({
-  name: 'TheLayout',
-  components: {
-    TheSidebar,
-    TheHeader
-  }
+  name: 'TheLayout'
 })
 </script>
 
