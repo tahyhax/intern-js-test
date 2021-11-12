@@ -6,5 +6,5 @@ export interface IUser {
     position: string,
     logo: ?string,
     notifications: number,
-    tasks: ITask
+    task: ITask
 }

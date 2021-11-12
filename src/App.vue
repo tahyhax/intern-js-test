@@ -1,24 +1,25 @@
 <template lang="pug">
-.wrapper
-  .container
-    Sidebar(:user='user' @updateTasks="updateTasks")/
-    .main-block
-      Header/
-      section.main-block__content
-        router-view(@click="notificationIndex")/
-
+the-layout
+  template(v-slot:sidebar)
+    the-sidebar(:user='user' @updateTask="updateTask")/
+  template(v-slot:header)
+    the-header/
+  template(v-slot:default)
+    router-view(@click="notificationIndex")/
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Sidebar from '@/components/Sidebar.vue'
-import Header from '@/components/Header.vue'
+import TheLayout from '@/components/TheLayout.vue'
+import TheSidebar from '@/components/TheSidebar.vue'
+import TheHeader from '@/components/TheHeader.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    Sidebar,
-    Header
+    TheLayout,
+    TheSidebar,
+    TheHeader
   },
   data () {
     return {
@@ -28,7 +29,7 @@ export default defineComponent({
         position: 'Product Owner',
         logo: '../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg', // NOTE  how  this  work
         notifications: 3,
-        tasks: {
+        task: {
           open: 11,
           complete: 372
         }
@@ -36,7 +37,7 @@ export default defineComponent({
     }
   },
   methods: {
-    updateTasks (type: 'complete'|'open') {
+    updateTask (type: 'complete' | 'open') {
       const revertType = type === 'complete' ? 'open' : 'complete'
       const messageConfirm = 'Are you sure you want to change the number of tasks?'
       if (this.validateTask(type)) {
@@ -46,12 +47,12 @@ export default defineComponent({
       }
 
       if (confirm(messageConfirm)) {
-        this.user.tasks[type]--
-        this.user.tasks[revertType]++
+        this.user.task[type]--
+        this.user.task[revertType]++
       }
     },
-    validateTask (type: 'complete'|'open'):boolean {
-      return !this.user.tasks[type]
+    validateTask (type: 'complete' | 'open'): boolean {
+      return !this.user.task[type]
     },
     notificationIndex (): void {
       // TODO cant  catch index param from emit
@@ -103,38 +104,4 @@ body {
   font-family: Helvetica, sans-serif;
 }
 
-.wrapper {
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-}
-
-.container {
-  max-width: 100%;
-  margin: 0 auto;
-  width: 100%;
-  display: flex;
-  @media (max-width: 767px) {
-    max-width: none;
-  }
-}
-
-.main-block {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-
-  &__content {
-    background-color: #eeebe5;
-    overflow-y: auto;
-    height: 100vh;
-    @media (min-width: 768px) {
-      padding-top: 30px;
-      display: flex;
-      flex: 1;
-      justify-content: center;
-    }
-  }
-}
 </style>

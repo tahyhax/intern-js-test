@@ -12,20 +12,20 @@ aside#sidebar.sidebar.sidebar-container
       input.logo-search__search-input.logo-search__search-input--hidden(type="text" placeholder="Search")
   div.sidebar__user-info.user-info
     .user-info__about
-      .user-info__logo.logo.logo--big
+      app-avatar.user-info__logo.logo--big
         img(src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="Jean Gonzales")
       .user-info__about-text
         p.user-info__text--fname {{ fullname }}
         p.user-info__text--job {{ user.position }}
     .user-info__dots
-      <Dots/>
+      app-dots/
   .sidebar__tasks
     .sidebar__tasks-item
-      p.sidebar__tasks-title(@click="updateCompletedTasks") {{ user.tasks.complete }}
+      p.sidebar__tasks-title(@click="updateCompletedTask") {{ user.task.complete }}
       p.sidebar__tasks-subtitle
         | Completed Tasks
     .sidebar__tasks-item
-      p.sidebar__tasks-title(@click="updateOpenTasks") {{ user.tasks.open }}
+      p.sidebar__tasks-title(@click="updateOpenTask") {{ user.task.open }}
       p.sidebar__tasks-subtitle
         | Open Tasks
   .sidebar__menu
@@ -44,18 +44,19 @@ aside#sidebar.sidebar.sidebar-container
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import Dots from '@/components/Dots.vue'
+import AppDots from '@/components/ui/AppDots.vue'
+import AppAvatar from '@/components/ui/AppAvatar.vue'
 import { IUser } from '@/types/user'
 
 export default defineComponent({
-  name: 'Sidebar',
+  name: 'TheSidebar',
   props: {
     user: {
       required: true,
       type: Object as PropType<IUser>
     }
   },
-  components: { Dots },
+  components: { AppAvatar, AppDots },
   computed: {
     fullname (): string {
       return `${this.user.lastname}  ${this.user.firstname}`
@@ -63,11 +64,11 @@ export default defineComponent({
   },
 
   methods: {
-    updateCompletedTasks (): void {
-      this.$emit('updateTasks', 'complete')
+    updateCompletedTask (): void {
+      this.$emit('updateTask', 'complete')
     },
-    updateOpenTasks (): void {
-      this.$emit('updateTasks', 'open')
+    updateOpenTask (): void {
+      this.$emit('updateTask', 'open')
     }
   }
 
@@ -75,32 +76,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
-.logo {
-  border-radius: 50%;
-  overflow: hidden;
-
-  width: 25px;
-  height: 25px;
-  @media (min-width: 768px) {
-    width: 30px;
-    height: 30px;
-  }
-
-  &__link {
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
-
-  &--big {
-    width: 50px;
-    height: 50px;
-  }
-}
-
 .sidebar-container {
   width: 270px;
   padding: 30px 0;
