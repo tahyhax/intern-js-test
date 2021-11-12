@@ -5,7 +5,7 @@ the-layout
   template(v-slot:header)
     the-header/
   template(v-slot:default)
-    router-view(@click="notificationIndex")/
+    router-view(@update-notification="onUpdateNotification")/
 </template>
 
 <script lang="ts">
@@ -13,6 +13,7 @@ import { defineComponent } from 'vue'
 import TheLayout from '@/components/TheLayout.vue'
 import TheSidebar from '@/components/TheSidebar.vue'
 import TheHeader from '@/components/TheHeader.vue'
+import { IUser } from '@/types/user'
 
 export default defineComponent({
   name: 'App',
@@ -33,7 +34,7 @@ export default defineComponent({
           open: 11,
           complete: 372
         }
-      }
+      } as IUser
     }
   },
   methods: {
@@ -54,8 +55,8 @@ export default defineComponent({
     validateTask (type: 'complete' | 'open'): boolean {
       return !this.user.task[type]
     },
-    notificationIndex (): void {
-      // TODO cant  catch index param from emit
+    onUpdateNotification (index:number): void {
+      this.user.notifications = index
     }
 
   }

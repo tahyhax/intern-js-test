@@ -17,7 +17,7 @@
             .activity__message-attachment
               a.activity__message-attachment-item(href="#" v-for="(attachment, key) in activity.attachments"
                 :key="key"
-                @click="notificationIndex(key)")
+                @click="updateNotification(key)")
                 img(:src="attachment.src" :alt="attachment.description")
         .activity__message-time {{ activity.created }}
 </template>
@@ -70,8 +70,8 @@ export default defineComponent({
     }
   },
   methods: {
-    notificationIndex (index:number):void {
-      this.$emit('notificationIndex', index)
+    updateNotification (index:number):void {
+      this.$emit('update-notification', index)
     }
   }
 })
