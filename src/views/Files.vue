@@ -1,6 +1,5 @@
 <template lang="pug">
 app-coming-soon
-  | This page in progress
 </template>
 
 <script lang="ts">
@@ -8,7 +7,7 @@ import { defineComponent } from 'vue'
 import AppComingSoon from '@/components/AppComingSoon.vue'
 
 export default defineComponent({
-  name: 'kanban',
+  name: 'files',
   components: { AppComingSoon }
 })
 </script>
