@@ -26,7 +26,7 @@ aside#sidebar.sidebar.sidebar-container
         | Completed Tasks
     .sidebar__tasks-item
       p.sidebar__tasks-title(@click="updateOpenTask") {{ user.task.open }}
-      p.sidebar__tasks-subtitle
+      p.sidebar__tasks-subtitle(@click="($router.push({name:'Tasks'}))")
         | Open Tasks
   .sidebar__menu
     nav.menu
