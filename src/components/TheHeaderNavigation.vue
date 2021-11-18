@@ -6,17 +6,24 @@ ul.nav
                  active-class="nav__link--active")
       | Tasks
   li.nav__item
-    a.nav__link(href="#") Kanban
+    router-link(class="nav__link"
+                :to="{name:'Kanban'}"
+                active-class="nav__link--active")
+      | Kanban
   li.nav__item
     router-link(class="nav__link"
                  :to="{name:'Activity'}"
                  active-class="nav__link--active")
       | Activity
   li.nav__item
-    a.nav__link( href="#")
+    router-link(class="nav__link"
+      :to="{name:'Calendar'}"
+      active-class="nav__link--active")
       | Calendar
   li.nav__item
-    a.nav__link( href="#")
+    router-link(class="nav__link"
+      :to="{name:'Files'}"
+      active-class="nav__link--active")
       | Files
 </template>
 

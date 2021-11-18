@@ -12,6 +12,21 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/Activity.vue')
   },
   {
+    path: '/kanban',
+    name: 'Kanban',
+    component: () => import('../views/Kanban.vue')
+  },
+  {
+    path: '/calendar',
+    name: 'Calendar',
+    component: () => import('../views/Calendar.vue')
+  },
+  {
+    path: '/files',
+    name: 'Files',
+    component: () => import('../views/Files.vue')
+  },
+  {
     path: '/:pathMatch(.*)*',
     component: () => import('../views/errors/404.vue')
   }
