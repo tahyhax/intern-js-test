@@ -22,6 +22,7 @@ export default {
   color: #131313;
   padding: 0;
   border-radius: 50%;
+  cursor: pointer;
 
   @media (min-width: 767px) {
     border-radius: 15px;
