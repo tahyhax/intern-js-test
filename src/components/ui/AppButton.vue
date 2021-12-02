@@ -23,6 +23,10 @@ export default {
   padding: 0;
   border-radius: 50%;
   cursor: pointer;
+  transition: 0.2s linear;
+  &:hover {
+    opacity: 0.8;
+  }
 
   @media (min-width: 767px) {
     border-radius: 15px;
@@ -47,6 +51,12 @@ export default {
   &--chat {
     color: #ffc200;
     background: #fff8dd;
+  }
+  &--primary{
+    background-color: #007bff;
+  }
+  &--secondary{
+    background-color: #6c757d;
   }
 }
 </style>
