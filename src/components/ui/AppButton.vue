@@ -58,5 +58,8 @@ export default {
   &--secondary{
     background-color: #6c757d;
   }
+  &--danger{
+    background-color: #dc3545;
+  }
 }
 </style>
