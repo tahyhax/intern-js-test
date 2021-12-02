@@ -10,7 +10,8 @@
         ErrorMessage(name="title" as="div" class="form__error")
       .form__field-wrap
         label.form__label Date
-        input-date-time(name="date")
+        Field(name="date"  class="form__input" :class="{'form__input--error': errors.date}" v-slot="{field}")
+          input-date-time(name="date" v-bind="field" )
         ErrorMessage(name="date" as="div" class="form__error" :class="{'form__input--error': errors.date}")
       .form__field-wrap
         label.form__label Text
@@ -23,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Form as VeeForm, Field, ErrorMessage, FormActions, useResetForm } from 'vee-validate'
+import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
 import * as Yup from 'yup'
 import AppButton from '@/components/ui/AppButton.vue'
 import inputDateTime from '@/components/Form/InputDatePicker.vue'
@@ -42,16 +43,14 @@ export default defineComponent({
     const schema = Yup.object().shape({
       title: Yup.string().required().label('title'),
       text: Yup.string().required().label('text'),
-      date: Yup.date().default(function () {
-        return new Date()
-      })
+      date: Yup.string().required().nullable().label('date')
     })
     return {
       schema,
       task: {
         title: '',
         text: '',
-        date: new Date().toUTCString(),
+        date: '',
         status: 'open'
       } as ITasks
     }
