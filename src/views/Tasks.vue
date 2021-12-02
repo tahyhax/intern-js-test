@@ -32,8 +32,7 @@ export default defineComponent({
   },
   data () {
     return {
-      tasks: [
-      ] as Array<ITasks>
+      tasks: [] as Array<ITasks>
     }
   },
   methods: {
