@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Form as VeeForm, Field, ErrorMessage } from 'vee-validate'
+import { Form as VeeForm, Field, ErrorMessage, FormActions, FormState } from 'vee-validate'
 import * as Yup from 'yup'
 import AppButton from '@/components/ui/AppButton.vue'
 import inputDateTime from '@/components/Form/InputDatePicker.vue'
@@ -57,7 +57,8 @@ export default defineComponent({
   },
 
   methods: {
-    onSubmit (values:ITasks, actions:any):void {
+    // NOTE как сделать правильно параметр actions
+    onSubmit (values:ITasks, actions:FormActions<Partial<FormState<string>>>):void {
       this.$emit('onSubmit', values)
       actions.resetForm()
     }

@@ -44,7 +44,7 @@ export default defineComponent({
     focus () {
       this.$refs.input.focus()
     },
-    eventChange (selectedDates, dateStr, instance) {
+    eventChange (selectedDates, dateStr) {
       this.$emit('update:modelValue', dateStr)
     }
   }
