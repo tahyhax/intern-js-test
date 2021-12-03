@@ -3,26 +3,50 @@
   header.task__header
     h3 Today
   .task__body
+    task-form(@onSubmit="addTask")
     .task__message(v-for="(task, key) in tasks"
          :key="key")
+      .task__message-wrap
         .task__message-icon(:class="'task__message-icon--' + task.type")
           img(src="@/assets/Icon@3x.svg")
         .task__message-body
           .task__message-content
             .task__message-text
               p {{ task.text }}
-          .task__message-time {{ task.created }}
+          .task__message-time {{ task.date }}
+      .task__actions
+        app-button.task__button.button--primary(v-if="isOpen(task.status)" @click="completedTask(key)") Complete
+        app-button.task__button.button--danger(@click="destroyTask(key)") Delete
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import TaskForm from '@/components/Task/TaskFrom.vue'
+import AppButton from '@/components/ui/AppButton.vue'
+
+import { ITasks } from '@/types/tasks'
 export default defineComponent({
   name: 'Tasks',
+  components: {
+    TaskForm,
+    AppButton
+  },
   data () {
     return {
-      tasks: [
-        { title: 'task 1', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged', status: 'open', created: '8:15 PM', updated: '', creator: 'manager', updater: '' },
-        { title: 'task 2', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged', status: 'complete', created: '5:15 PM', updated: '', creator: 'manager', updater: '' }
-      ]
+      tasks: [] as Array<ITasks>
+    }
+  },
+  methods: {
+    addTask (task:ITasks):void {
+      this.tasks.push(task)
+    },
+    destroyTask (index:number):void {
+      this.tasks.splice(index, 1)
+    },
+    completedTask (index:number) {
+      this.tasks[index].status = 'complete'
+    },
+    isOpen (status:string):boolean {
+      return status === 'open'
     }
   }
 })
@@ -53,9 +77,10 @@ export default defineComponent({
     flex-direction: column;
   }
 
-  &__message {
+  &__message-wrap {
     display: flex;
-    margin-bottom: 5px;
+  }
+  &__message {
     margin-bottom: 10px;
     font-size: 14px;
     color: #131313;
@@ -134,6 +159,15 @@ export default defineComponent({
   &__message-time {
     font-size: 14px;
     opacity: 0.7;
+  }
+  &__actions{
+    display: flex;
+    justify-content: end;
+  }
+  &__button {
+    margin-right: 5px;
+    max-width: 75px;
+    color: #ffffff;
   }
 }
 
