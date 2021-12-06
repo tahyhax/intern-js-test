@@ -25,7 +25,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { Form as VeeForm, Field, ErrorMessage, FormActions, FormState } from 'vee-validate'
-import * as Yup from 'yup'
+import { string as YString, object as YObject } from 'yup'
 import AppButton from '@/components/ui/AppButton.vue'
 import inputDateTime from '@/components/Form/InputDatePicker.vue'
 import { ITasks } from '@/types/tasks'
@@ -40,10 +40,10 @@ export default defineComponent({
     inputDateTime
   },
   data () {
-    const schema = Yup.object().shape({
-      title: Yup.string().required().label('title'),
-      text: Yup.string().required().label('text'),
-      date: Yup.string().required().nullable().label('date')
+    const schema = YObject().shape({
+      title: YString().required().label('title'),
+      text: YString().required().label('text'),
+      date: YString().required().nullable().label('date')
     })
     return {
       schema,
