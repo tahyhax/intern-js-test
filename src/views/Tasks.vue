@@ -4,54 +4,53 @@
     h3 Today
   .task__body
     task-form(@onSubmit="addTask")
-    .task__message(v-for="(task, key) in tasks"
-         :key="key")
-      .task__message-wrap
-        .task__message-icon(:class="'task__message-icon--' + task.type")
-          img(src="@/assets/Icon@3x.svg")
-        .task__message-body
-          .task__message-content
-            .task__message-text
-              p {{ task.text }}
-          .task__message-time {{ task.date }}
-      .task__actions
-        app-button.task__button.button--primary(v-if="isOpen(task.status)" @click="completedTask(key)") Complete
-        app-button.task__button.button--danger(@click="destroyTask(key)") Delete
+    .task__list
+      task-item(v-for="(task, key) in tasks"
+        :task="task"
+        :index="key"
+        :key="`task-${key}`"
+        @onCompleteTask="completeTask"
+        @onDestroyTask="destroyTask"
+      )
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import TaskForm from '@/components/Task/TaskFrom.vue'
-import AppButton from '@/components/ui/AppButton.vue'
-
 import { ITasks } from '@/types/tasks'
+import TaskForm from '@/components/Task/TaskFrom.vue'
+import TaskItem from '@/components/Task/TaskItem.vue'
+
 export default defineComponent({
   name: 'Tasks',
   components: {
     TaskForm,
-    AppButton
+    TaskItem
   },
   data () {
     return {
       tasks: [] as Array<ITasks>
     }
   },
+  created () {
+    this.tasks = [
+      { title: 'task 1', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged', status: 'open', date: '2021-12-09 14:23' },
+      { title: 'task 2', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged', status: 'open', date: '2021-12-09 14:24' },
+      { title: 'task 3', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged', status: 'open', date: '2021-12-09 14:26' }
+    ]
+  },
   methods: {
-    addTask (task:ITasks):void {
+    addTask (task: ITasks): void {
       this.tasks.push(task)
     },
-    destroyTask (index:number):void {
+    destroyTask (index: number): void {
       this.tasks.splice(index, 1)
     },
-    completedTask (index:number) {
+    completeTask (index: number) {
       this.tasks[index].status = 'complete'
-    },
-    isOpen (status:string):boolean {
-      return status === 'open'
     }
   }
 })
 </script>
-<style lang="scss" scoped>
+<style lang="scss" itemscope>
 .task {
   padding: 15px;
   background: #ffffff;
@@ -76,99 +75,5 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
   }
-
-  &__message-wrap {
-    display: flex;
-  }
-  &__message {
-    margin-bottom: 10px;
-    font-size: 14px;
-    color: #131313;
-    padding: 10px 0;
-
-    &--answer {
-      max-width: 550px;
-      align-self: center;
-      font-size: 15px;
-      padding: 20px 30px;
-      border-radius: 10px;
-      background-color: #f7f6f3;
-    }
-  }
-
-  &__message-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-right: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    @media (max-width: 567px) {
-      display: none;
-    }
-
-    &--complete {
-      background-color: #cef9c6;
-    }
-
-    &--message {
-      background-color: #fff8dd;
-    }
-
-    &--attachment {
-      background-color: #e3efff;
-    }
-  }
-
-  &__message-body {
-    display: flex;
-    flex: 1;
-    font-size: 16px;
-    line-height: 20px;
-    justify-content: space-between;
-  }
-
-  &__message-content {
-    max-width: 460px;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-  }
-
-  &__message-attachment {
-    display: flex;
-    flex-wrap: wrap;
-    align-self: self-start;
-    margin: 0 -5px;
-    margin-top: 20px;
-  }
-
-  &__message-attachment-item {
-    padding: 0 5px;
-    margin-bottom: 10px;
-
-    & > img {
-      border-radius: 8px;
-    }
-  }
-
-  &__message-time {
-    font-size: 14px;
-    opacity: 0.7;
-  }
-  &__actions{
-    display: flex;
-    justify-content: end;
-  }
-  &__button {
-    margin-right: 5px;
-    max-width: 75px;
-    color: #ffffff;
-  }
 }
-
 </style>
