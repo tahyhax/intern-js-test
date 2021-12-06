@@ -17,14 +17,12 @@
 import { defineComponent } from 'vue'
 import { ITasks } from '@/types/tasks'
 import TaskForm from '@/components/Task/TaskFrom.vue'
-import AppButton from '@/components/ui/AppButton.vue'
 import TaskItem from '@/components/Task/TaskItem.vue'
 
 export default defineComponent({
   name: 'Tasks',
   components: {
     TaskForm,
-    AppButton,
     TaskItem
   },
   data () {
@@ -35,8 +33,8 @@ export default defineComponent({
   created () {
     this.tasks = [
       { title: 'task 1', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged', status: 'open', date: '2021-12-09 14:23' },
-      { title: 'task 1', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged', status: 'open', date: '2021-12-09 14:24' },
-      { title: 'task 1', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged', status: 'open', date: '2021-12-09 14:26' }
+      { title: 'task 2', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged', status: 'open', date: '2021-12-09 14:24' },
+      { title: 'task 3', text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged', status: 'open', date: '2021-12-09 14:26' }
     ]
   },
   methods: {
