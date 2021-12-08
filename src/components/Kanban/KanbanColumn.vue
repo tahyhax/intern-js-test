@@ -7,18 +7,21 @@
       kanban-column-task(v-for="task in column.tasks" key="column.type" :task="task")
 </template>
 
-<script>
+<script lang="ts">
+import { PropType, defineComponent } from 'vue'
+import { IKanban } from '@/types/kanban'
 import KanbanColumnTask from '@/components/Kanban/KanbanColumnTask.vue'
-export default {
+
+export default defineComponent({
   name: 'KanbanColumn',
   components: { KanbanColumnTask },
   props: {
     column: {
       required: true,
-      type: Object
+      type: Object as PropType<IKanban>
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
@@ -30,6 +33,7 @@ export default {
     align-content: flex-start;
     padding: 0 0.6rem 0.5rem;
   }
+
   &__item {
     font-size: 1.2rem;
     font-weight: 400;
@@ -42,10 +46,12 @@ export default {
     margin-bottom: 0.6rem;
     word-wrap: break-word;
     cursor: pointer;
+
     &:last-of-type {
       margin-bottom: 0;
     }
-    &:hover{
+
+    &:hover {
       background-color: #eee;
     }
   }

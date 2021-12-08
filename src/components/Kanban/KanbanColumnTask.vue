@@ -3,16 +3,18 @@
   | {{task.text}}
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, PropType } from 'vue'
+import { ITask } from '@/types/task'
+export default defineComponent({
   name: 'KanbanColumnTask',
   props: {
     task: {
       required: true,
-      type: Object
+      type: Object as PropType<ITask>
     }
   }
-}
+})
 </script>
 
 <style scoped>
