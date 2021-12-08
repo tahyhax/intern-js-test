@@ -1,4 +1,4 @@
-export enum ETaskStatus {
+export const enum ETaskStatus {
     todo = 'todo',
     inprogresss = 'in-progress',
     done = 'done'
