@@ -1,4 +1,8 @@
-import { ITask } from '@/types/task'
+
+interface IUserTask {
+    open: number,
+    complete: number
+}
 
 export interface IUser {
     lastname: string,
@@ -6,5 +10,5 @@ export interface IUser {
     position: string,
     logo: ?string,
     notifications: number,
-    task: ITask
+    task: IUserTask
 }
