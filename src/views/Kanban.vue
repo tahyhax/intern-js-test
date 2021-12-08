@@ -8,7 +8,7 @@ section.kanban
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import KanbanColumn from '@/components/Kanban/KanbanColumn.vue'
 import { ETaskStatus } from '@/types/task'
 import { IKanban } from '@/types/kanban'
@@ -17,7 +17,7 @@ export default defineComponent({
   name: 'kanban',
   components: { KanbanColumn },
   setup () {
-    const kanbanList = [
+    const kanbanList = reactive([
       {
         name: 'To Do',
         type: 'todo',
@@ -90,7 +90,7 @@ export default defineComponent({
           }
         ]
       }
-    ] as unknown as Array<IKanban>
+    ]) as Array<IKanban>
     return { kanbanList }
   }
 })
@@ -120,34 +120,6 @@ export default defineComponent({
     font-weight: 700;
     color: #333;
     padding: 1rem;
-  }
-}
-.kanban-task {
-  &__list {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-content: flex-start;
-    padding: 0 0.6rem 0.5rem;
-  }
-  &__item {
-    font-size: 1.2rem;
-    font-weight: 400;
-    line-height: 1.3;
-    background-color: #fff;
-    padding: 0.65rem 0.6rem;
-    color: #4d4d4d;
-    border-bottom: 0.1rem solid #ccc;
-    border-radius: 0.2rem;
-    margin-bottom: 0.6rem;
-    word-wrap: break-word;
-    cursor: pointer;
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-    &:hover{
-      background-color: #eee;
-    }
   }
 }
 </style>
