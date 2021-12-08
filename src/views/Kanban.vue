@@ -12,6 +12,7 @@ import { defineComponent, reactive } from 'vue'
 import KanbanColumn from '@/components/Kanban/KanbanColumn.vue'
 import { ETaskStatus } from '@/types/task'
 import { IKanban } from '@/types/kanban'
+import { uuid } from '@/utils'
 
 export default defineComponent({
   name: 'kanban',
@@ -23,18 +24,21 @@ export default defineComponent({
         type: 'todo',
         tasks: [
           {
+            _id: uuid(),
             title: 'task 1',
             text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
             status: ETaskStatus.todo,
             date: '2021-12-09 14:23'
           },
           {
+            _id: uuid(),
             title: 'task 2',
             text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
             status: ETaskStatus.todo,
             date: '2021-12-09 14:24'
           },
           {
+            _id: uuid(),
             title: 'task 3',
             text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
             status: ETaskStatus.todo,
@@ -47,18 +51,21 @@ export default defineComponent({
         type: 'in-progress',
         tasks: [
           {
+            _id: uuid(),
             title: 'task 1',
             text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
             status: ETaskStatus.inprogresss,
             date: '2021-12-09 14:23'
           },
           {
+            _id: uuid(),
             title: 'task 2',
             text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
             status: ETaskStatus.inprogresss,
             date: '2021-12-09 14:24'
           },
           {
+            _id: uuid(),
             title: 'task 3',
             text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
             status: ETaskStatus.inprogresss,
@@ -71,18 +78,21 @@ export default defineComponent({
         type: 'done',
         tasks: [
           {
+            _id: uuid(),
             title: 'task 1',
             text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
             status: ETaskStatus.done,
             date: '2021-12-09 14:23'
           },
           {
+            _id: uuid(),
             title: 'task 2',
             text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
             status: ETaskStatus.done,
             date: '2021-12-09 14:24'
           },
           {
+            _id: uuid(),
             title: 'task 3',
             text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
             status: ETaskStatus.done,
