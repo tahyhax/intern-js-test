@@ -24,11 +24,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Form as VeeForm, Field, ErrorMessage, FormActions, FormState } from 'vee-validate'
-import { string as YString, object as YObject } from 'yup'
+import { ErrorMessage, Field, Form as VeeForm, FormActions, FormState } from 'vee-validate'
+import { object as YObject, string as YString } from 'yup'
 import AppButton from '@/components/ui/AppButton.vue'
 import inputDateTime from '@/components/Form/InputDatePicker.vue'
-import { ITasks } from '@/types/tasks'
+import { ETaskStatus, ITask } from '@/types/task'
+import { uuid } from '@/utils'
 
 export default defineComponent({
   name: 'TaskFrom',
@@ -48,17 +49,18 @@ export default defineComponent({
     return {
       schema,
       task: {
+        _id: uuid(),
         title: '',
         text: '',
         date: '',
-        status: 'open'
-      } as ITasks
+        status: ETaskStatus.todo
+      } as ITask
     }
   },
 
   methods: {
     // NOTE как сделать правильно параметр actions
-    onSubmit (values:ITasks, actions:FormActions<Partial<FormState<string>>>):void {
+    onSubmit (values:ITask, actions:FormActions<Partial<FormState<string>>>):void {
       this.$emit('onSubmit', values)
       actions.resetForm()
     }
@@ -93,7 +95,7 @@ $buttonColor: #FFFFFF;
 
   &__actions {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
   }
 
   &__button {

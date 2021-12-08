@@ -9,13 +9,13 @@
           p {{ task.text }}
     .task-item__time {{ task.date }}
   .task-item__actions
-    app-button.task-item__button.button--primary(v-if="isOpen(task.status)" @click="completeTask(index)") Complete
+    app-button.task-item__button.button--primary(v-if="isTodo(task.status)" @click="completeTask(index)") Complete
     app-button.task-item__button.button--danger(@click="destroyTask(index)") Delete
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { ITasks } from '@/types/tasks'
+import { ETaskStatus, ITask } from '@/types/task'
 import AppButton from '@/components/ui/AppButton.vue'
 
 export default defineComponent({
@@ -26,7 +26,7 @@ export default defineComponent({
   props: {
     task: {
       required: true,
-      type: Object as PropType<ITasks>
+      type: Object as PropType<ITask>
     },
     index: {
       required: true,
@@ -37,18 +37,30 @@ export default defineComponent({
     const completeTask = (index: number): void => {
       emit('onCompleteTask', index)
     }
-    const isOpen = (status: string): boolean => {
-      return status === 'open'
+    const isTodo = (status: string): boolean => {
+      return status !== ETaskStatus.done
     }
     const destroyTask = (index:number):void => {
       emit('onDestroyTask', index)
     }
-    return { completeTask, destroyTask, isOpen }
+
+    const afterEnter = (el: { style: string }) => {
+      debugger
+      console.log(el)
+      el.style.fontsize('1.5rem')
+    }
+    const beforeLeave = (el: { style: string }) => {
+      console.log(el)
+
+      el.style.fontsize('1rem')
+    }
+    return { completeTask, destroyTask, isTodo, afterEnter, beforeLeave }
   }
 })
 </script>
 
 <style lang="scss" scoped>
+
 .task-item {
   margin-bottom: 10px;
   font-size: 14px;
@@ -132,7 +144,7 @@ export default defineComponent({
 
   &__actions {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
   }
 
   &__button {
