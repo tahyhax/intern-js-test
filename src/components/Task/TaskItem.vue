@@ -43,18 +43,7 @@ export default defineComponent({
     const destroyTask = (index:number):void => {
       emit('onDestroyTask', index)
     }
-
-    const afterEnter = (el: { style: string }) => {
-      debugger
-      console.log(el)
-      el.style.fontsize('1.5rem')
-    }
-    const beforeLeave = (el: { style: string }) => {
-      console.log(el)
-
-      el.style.fontsize('1rem')
-    }
-    return { completeTask, destroyTask, isTodo, afterEnter, beforeLeave }
+    return { completeTask, destroyTask, isTodo }
   }
 })
 </script>
