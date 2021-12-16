@@ -1,7 +1,7 @@
 import { ETaskStatus, ITask } from '@/types/task'
 
-export interface IKanban {
+export interface IKanbanColumns {
     name: string,
     type: ETaskStatus,
-    tasks: Array<ITask>
+    tasks?: ITask[]
 }

@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue'
-import { IKanban } from '@/types/kanban'
+import { IKanbanColumns } from '@/types/kanbanColumns'
 import KanbanColumnTask from '@/components/Kanban/KanbanColumnTask.vue'
 
 export default defineComponent({
@@ -18,7 +18,7 @@ export default defineComponent({
   props: {
     column: {
       required: true,
-      type: Object as PropType<IKanban>
+      type: Object as PropType<IKanbanColumns>
     }
   }
 })
@@ -45,7 +45,6 @@ export default defineComponent({
     border-radius: 0.2rem;
     margin-bottom: 0.6rem;
     word-wrap: break-word;
-    cursor: pointer;
 
     &:last-of-type {
       margin-bottom: 0;
