@@ -13,7 +13,6 @@
         @onCompleteTask="completeTask"
         @onDestroyTask="destroyTask"
       )
-
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive } from 'vue'
