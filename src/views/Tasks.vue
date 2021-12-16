@@ -11,7 +11,7 @@
         :index="key"
         :key="`task-${key}`"
         @onCompleteTask="completeTask"
-        @onDestroyTask="destroyTask(index)"
+        @onDestroyTask="destroyTask(key)"
       )
 </template>
 <script lang="ts">
