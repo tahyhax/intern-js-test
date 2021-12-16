@@ -91,54 +91,6 @@ export default defineComponent({
     }
   }
 })
-// export default defineComponent({
-//   name: 'Tasks',
-//   components: {
-//     TaskForm,
-//     TaskItem
-//   },
-//   data () {
-//     return {
-//       tasks: [] as Array<ITask>
-//     }
-//   },
-//   created () {
-//     this.tasks = [
-//       {
-//         _id: uuid(),
-//         title: 'task 1',
-//         text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
-//         status: ETaskStatus.todo,
-//         date: '2021-12-09 14:23'
-//       },
-//       {
-//         _id: uuid(),
-//         title: 'task 2',
-//         text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
-//         status: ETaskStatus.todo,
-//         date: '2021-12-09 14:24'
-//       },
-//       {
-//         _id: uuid(),
-//         title: 'task 3',
-//         text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
-//         status: ETaskStatus.todo,
-//         date: '2021-12-09 14:26'
-//       }
-//     ]
-//   },
-//   methods: {
-//     addTask (task: ITask): void {
-//       this.tasks.push(task)
-//     },
-//     destroyTask (index: number): void {
-//       this.tasks.splice(index, 1)
-//     },
-//     completeTask (index: number) {
-//       this.tasks[index].status = ETaskStatus.done
-//     }
-//   }
-// })
 </script>
 <style lang="scss" itemscope>
 .task {
