@@ -7,7 +7,7 @@
   h3.kanban__title
     | {{column.name}}
   .kanban-task
-    .kanban-task__list
+    .kanban-task__list(v-if="column.tasks.length")
       kanban-column-task(
         v-for="task in column.tasks"
         :key="task._id"
@@ -16,6 +16,8 @@
         @dblclick="onTaskDetail(task)"
         @dragstart="onDragStart($event, task)"
       )
+    .kanban-task__list--empty(v-else) No Tasks
+
 </template>
 
 <script lang="ts">
@@ -71,6 +73,12 @@ export default defineComponent({
     flex-direction: column;
     align-content: flex-start;
     padding: 0 0.6rem 0.5rem;
+    &--empty {
+      font: 1.2em bold;
+      padding: 15px;
+      text-align: center;
+      background-color: #fff;
+    }
   }
 
   &__item {

@@ -133,11 +133,11 @@ export default defineComponent({
     const handlerDrugTask = (druggableData: any) => {
       tasks.forEach(item => {
         if (item._id === druggableData.itemId) {
-          item.status = druggableData.status
+          item.status = druggableData.type
         }
       })
     }
-    return { isTaskShow, taskToShow, handleTaskDetail, handlerOnCLose, kanbanList, handlerDrugTask }
+    return { isTaskShow, taskToShow, handleTaskDetail, handlerOnCLose, kanbanList, handlerDrugTask, tasks }
   }
 })
 </script>
@@ -158,6 +158,7 @@ export default defineComponent({
     border-radius: 0.3rem;
     margin-right: 1rem;
     max-width: calc(100% / 3);
+    min-width: calc(100% / 3 - 3rem);
 
     &:last-of-type {
       margin-right: 0;
