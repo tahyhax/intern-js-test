@@ -10,7 +10,9 @@ section.kanban
     template(#body)
       kanban-card-detail(:card="taskToShow")
   .kanban__container
-    kanban-column(v-for="(column, key) in kanbanList"
+    kanban-column(
+      v-for="(column, key) in kanbanList"
+      @onDrugTask="handlerDrugTask"
     :column="column"
     :key="`kanban-${key}`"
     @onTaskDetail="handleTaskDetail"
@@ -112,22 +114,30 @@ export default defineComponent({
     ]) as Array<ITask>
     const kanbanList = computed(() => {
       return kanbanColumns.map(column => {
-        // eslint-disable-next-line no-return-assign
-        column.tasks = tasks.filter((task) => task.status === column.type)
-        return column
+        return {
+          ...column,
+          tasks: tasks.filter((task) => task.status === column.type)
+        }
       })
     })
 
     const taskToShow = ref({})
     const isTaskShow = ref(false)
-    const handleTaskDetail = (task:any) => {
+    const handleTaskDetail = (task:ITask) => {
       taskToShow.value = task
       isTaskShow.value = true
     }
     const handlerOnCLose = () => {
       isTaskShow.value = false
     }
-    return { isTaskShow, taskToShow, handleTaskDetail, handlerOnCLose, kanbanList }
+    const handlerDrugTask = (druggableData: any) => {
+      tasks.forEach(item => {
+        if (item._id === druggableData.itemId) {
+          item.status = druggableData.status
+        }
+      })
+    }
+    return { isTaskShow, taskToShow, handleTaskDetail, handlerOnCLose, kanbanList, handlerDrugTask }
   }
 })
 </script>

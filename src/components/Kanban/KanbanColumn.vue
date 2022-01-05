@@ -1,17 +1,28 @@
 <template lang="pug">
-.kanban__column
+.kanban__column(
+      @drop="onDrop($event, column.type)"
+      @dragover.prevent
+      @dragenter.prevent
+    )
   h3.kanban__title
     | {{column.name}}
   .kanban-task
     .kanban-task__list
-      kanban-column-task(v-for="task in column.tasks" key="task._id" :task="task" @click="onTaskDetail(task)")
+      kanban-column-task(
+        v-for="task in column.tasks"
+        :key="task._id"
+        :task="task"
+        draggable="true"
+        @dblclick="onTaskDetail(task)"
+        @dragstart="onDragStart($event, task)"
+      )
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent, ref, reactive } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { IKanbanColumns } from '@/types/kanbanColumns'
 import KanbanColumnTask from '@/components/Kanban/KanbanColumnTask.vue'
-import { ITask } from '@/types/task'
+import { ETaskStatus, ITask } from '@/types/task'
 
 export default defineComponent({
   name: 'KanbanColumn',
@@ -22,12 +33,32 @@ export default defineComponent({
       type: Object as PropType<IKanbanColumns>
     }
   },
-  setup (props, { emit }) {
-    const onTaskDetail = (task:ITask) => {
+  setup: function (props, { emit }) {
+    const onTaskDetail = (task: ITask) => {
       emit('onTaskDetail', task)
     }
+    const onDrop = (event: DragEvent, type: ETaskStatus) => {
+      const { dataTransfer } = event
+      if (dataTransfer) {
+        const itemId = dataTransfer.getData('itemId')
+        emit('onDrugTask', { itemId, type })
+      }
+    }
 
-    return { onTaskDetail }
+    const onDragStart = (event: DragEvent, item: ITask) => {
+      const { dataTransfer } = event
+      if (dataTransfer) {
+        dataTransfer.dropEffect = 'move'
+        dataTransfer.effectAllowed = 'move'
+        dataTransfer.setData('itemId', item._id)
+      }
+    }
+
+    return {
+      onTaskDetail,
+      onDrop,
+      onDragStart
+    }
   }
 })
 </script>
@@ -53,6 +84,7 @@ export default defineComponent({
     border-radius: 0.2rem;
     margin-bottom: 0.6rem;
     word-wrap: break-word;
+    cursor: pointer;
 
     &:last-of-type {
       margin-bottom: 0;

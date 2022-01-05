@@ -50,7 +50,7 @@ export default defineComponent({
     }
   },
   setup (props, { emit }) {
-    const isEditable = ref(false)
+    const isEditable = ref<boolean>(false)
 
     const cardOldValue = { ...props.card }
     // debugger
