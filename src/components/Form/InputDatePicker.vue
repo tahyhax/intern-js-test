@@ -53,10 +53,12 @@ export default defineComponent({
 
 <style lang="scss" itemscope>
 .input-date {
-  padding: 5px;
+  padding: 10px;
   border-radius: 10px;
   overflow: hidden;
   outline: none;
   max-width: 100%;
+  background: #eaeaea;
+
 }
 </style>
