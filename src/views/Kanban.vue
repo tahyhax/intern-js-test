@@ -1,22 +1,34 @@
 <template lang="pug">
 section.kanban
+  app-modal(
+    v-if="isTaskShow"
+    :isActive="isTaskShow"
+    @onClose="handlerOnCLose"
+  )
+    template(#header)
+      | {{ taskToShow.title }}
+    template(#body)
+      kanban-card-detail(:card="taskToShow")
   .kanban__container
     kanban-column(v-for="(column, key) in kanbanList"
     :column="column"
     :key="`kanban-${key}`"
+    @onTaskDetail="handleTaskDetail"
     )
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed } from 'vue'
+import { defineComponent, reactive, computed, ref } from 'vue'
 import KanbanColumn from '@/components/Kanban/KanbanColumn.vue'
+import AppModal from '@/components/ui/AppModal.vue'
+import KanbanCardDetail from '@/components/Kanban/KanbanCardDetail.vue'
 import { ETaskStatus, ITask } from '@/types/task'
 import { IKanbanColumns } from '@/types/kanbanColumns'
 import { uuid } from '@/utils'
 
 export default defineComponent({
   name: 'kanban',
-  components: { KanbanColumn },
+  components: { AppModal, KanbanCardDetail, KanbanColumn },
   setup: function () {
     const kanbanColumns = [
       {
@@ -106,7 +118,16 @@ export default defineComponent({
       })
     })
 
-    return { kanbanList }
+    const taskToShow = ref({})
+    const isTaskShow = ref(false)
+    const handleTaskDetail = (task:any) => {
+      taskToShow.value = task
+      isTaskShow.value = true
+    }
+    const handlerOnCLose = () => {
+      isTaskShow.value = false
+    }
+    return { isTaskShow, taskToShow, handleTaskDetail, handlerOnCLose, kanbanList }
   }
 })
 </script>

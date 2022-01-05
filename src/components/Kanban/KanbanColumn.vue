@@ -4,13 +4,14 @@
     | {{column.name}}
   .kanban-task
     .kanban-task__list
-      kanban-column-task(v-for="task in column.tasks" key="column.type" :task="task")
+      kanban-column-task(v-for="task in column.tasks" key="task._id" :task="task" @click="onTaskDetail(task)")
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent } from 'vue'
+import { PropType, defineComponent, ref, reactive } from 'vue'
 import { IKanbanColumns } from '@/types/kanbanColumns'
 import KanbanColumnTask from '@/components/Kanban/KanbanColumnTask.vue'
+import { ITask } from '@/types/task'
 
 export default defineComponent({
   name: 'KanbanColumn',
@@ -20,6 +21,13 @@ export default defineComponent({
       required: true,
       type: Object as PropType<IKanbanColumns>
     }
+  },
+  setup (props, { emit }) {
+    const onTaskDetail = (task:ITask) => {
+      emit('onTaskDetail', task)
+    }
+
+    return { onTaskDetail }
   }
 })
 </script>
