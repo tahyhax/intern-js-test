@@ -133,7 +133,7 @@ export default defineComponent({
     const handlerSubmit = (task: ITask) => {
       // eslint-disable-next-line no-return-assign
       const taskIndex = tasks.findIndex(item => item._id === task._id)
-      tasks.splice(taskIndex, 0, task)
+      tasks.splice(taskIndex, 1, task)
       handlerOnCLose()
     }
     const handlerDrugTask = (druggableData: {item:ITask, newStatus:ETaskStatus}) => {
