@@ -8,7 +8,7 @@ section.kanban
     template(#header)
       | {{ taskToShow.title }}
     template(#body)
-      kanban-card-detail(:card="taskToShow")
+      kanban-card-detail(:card="taskToShow" @onSubmit="handlerSubmit")
   .kanban__container
     kanban-column(
       v-for="(column, key) in kanbanList"
@@ -20,7 +20,7 @@ section.kanban
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, ref } from 'vue'
+import { computed, defineComponent, reactive, ref } from 'vue'
 import KanbanColumn from '@/components/Kanban/KanbanColumn.vue'
 import AppModal from '@/components/ui/AppModal.vue'
 import KanbanCardDetail from '@/components/Kanban/KanbanCardDetail.vue'
@@ -130,14 +130,25 @@ export default defineComponent({
     const handlerOnCLose = () => {
       isTaskShow.value = false
     }
-    const handlerDrugTask = (druggableData: any) => {
-      tasks.forEach(item => {
-        if (item._id === druggableData.itemId) {
-          item.status = druggableData.type
-        }
-      })
+    const handlerSubmit = (task: ITask) => {
+      // eslint-disable-next-line no-return-assign
+      const taskIndex = tasks.findIndex(item => item._id === task._id)
+      tasks.splice(taskIndex, 0, task)
+      handlerOnCLose()
     }
-    return { isTaskShow, taskToShow, handleTaskDetail, handlerOnCLose, kanbanList, handlerDrugTask, tasks }
+    const handlerDrugTask = (druggableData: {item:ITask, newStatus:ETaskStatus}) => {
+      // eslint-disable-next-line no-return-assign
+      const { item: droppableTask, newStatus } = druggableData
+      if (droppableTask.status === ETaskStatus.done && newStatus === ETaskStatus.todo) {
+        alert('You cannot perform this action. If the status of the task is Done, you cannot change the status in Todo')
+        return false
+      }
+      const taskIndex = tasks.findIndex(item => item._id === droppableTask._id)
+      const task = tasks.splice(taskIndex, 1)[0]
+      task.status = newStatus
+      tasks.splice(taskIndex, 0, task)
+    }
+    return { isTaskShow, taskToShow, handleTaskDetail, handlerOnCLose, kanbanList, handlerDrugTask, handlerSubmit }
   }
 })
 </script>

@@ -58,13 +58,8 @@ export default defineComponent({
       text: YString().required().label('text'),
       date: YString().required().nullable().label('date')
     })
-    const onSubmit = (values: ITask, actions: FormActions<Partial<FormState<string>>>): void => {
+    const onSubmit = (values: ITask): void => {
       emit('onSubmit', values)
-      actions.resetForm()
-      closeModel()
-    }
-    const closeModel = () => {
-      emit('onCloseForm')
     }
     const cancelForm = () => {
       isEditable.value = false

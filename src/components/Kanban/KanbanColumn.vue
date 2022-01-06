@@ -39,11 +39,11 @@ export default defineComponent({
     const onTaskDetail = (task: ITask) => {
       emit('onTaskDetail', task)
     }
-    const onDrop = (event: DragEvent, type: ETaskStatus) => {
+    const onDrop = (event: DragEvent, newStatus: ETaskStatus) => {
       const { dataTransfer } = event
       if (dataTransfer) {
-        const itemId = dataTransfer.getData('itemId')
-        emit('onDrugTask', { itemId, type })
+        const item = JSON.parse(dataTransfer.getData('payload'))
+        emit('onDrugTask', { item, newStatus })
       }
     }
 
@@ -52,7 +52,7 @@ export default defineComponent({
       if (dataTransfer) {
         dataTransfer.dropEffect = 'move'
         dataTransfer.effectAllowed = 'move'
-        dataTransfer.setData('itemId', item._id)
+        dataTransfer.setData('payload', JSON.stringify(item))
       }
     }
 
