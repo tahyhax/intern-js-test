@@ -1,8 +1,9 @@
 <template lang="pug">
-vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="card" v-slot="{ errors, isSubmitting, handleReset}" class="form" ref="form" )
+vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="card" v-slot="{ errors, isSubmitting, handleReset, meta}" class="form" ref="form" )
   .form__field-wrap
     label.form__label Title
-    Field(name="title"  class="form__input" :class="{'form__input--error': errors.title}")
+    Field(name="title"  v-slot="{field, handleChange}" :class="{'form__input--error': errors.title}")
+      <input class="form__input"  @change="handleChange" :value="field.value" />
     ErrorMessage(name="title" as="div" class="form__error")
   .form__field-wrap
     label.form__label Date
@@ -16,7 +17,7 @@ vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="card" v
   .form__actions
       app-button.form__button.button--primary(v-if="!isEditable" @click="editCard") Edit
       app-button.form__button.button--secondary(v-if="isEditable" @click="cancelForm") Cancel
-      app-button.form__button.button--primary(v-if="isEdited" :disabled="isSubmitting") Save
+      app-button.form__button.button--primary(v-if="meta.dirty && isEditable" :disabled="isSubmitting") Save
 
 </template>
 
@@ -51,14 +52,6 @@ export default defineComponent({
   },
   setup (props, { emit }) {
     const isEditable = ref<boolean>(false)
-
-    const cardOldValue = { ...props.card }
-    // debugger
-    // const isEdited = () => [...Object.keys(props.card)].every(key => {
-    //   return JSON.stringify(props.card[key]) !== JSON.stringify(cardOldValue[key])
-    // })
-    //
-    const isEdited = computed(() => { return Object.entries(cardOldValue).sort().toString() !== Object.entries(props.card).sort().toString() })
     const editCard = () => { isEditable.value = true }
     const schema = YObject().shape({
       title: YString().required().label('title'),
@@ -75,9 +68,9 @@ export default defineComponent({
     }
     const cancelForm = () => {
       isEditable.value = false
-      // closeModel()
     }
-    return { schema, onSubmit, cancelForm, isEditable, isEdited, editCard, cardOldValue }
+
+    return { schema, onSubmit, cancelForm, isEditable, editCard }
   }
 
 })
@@ -114,7 +107,7 @@ $buttonColor: #FFFFFF;
     padding: 10px;
     background: #eaeaea;
     border-radius: 10px;
-    overflow: hidden;
+    //overflow: hidden;
     outline: none;
     max-width: 100%;
 
