@@ -2,17 +2,43 @@
 vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="card" v-slot="{ errors, isSubmitting, handleReset, meta}" class="form" ref="form" )
   .form__field-wrap
     label.form__label Title
-    Field(name="title"  v-slot="{field, handleChange}" :class="{'form__input--error': errors.title}")
-      input.form__input(@change="handleChange" v-bind="field")
-    ErrorMessage(name="title" as="div" class="form__error")
+    Field(
+      name="title"
+      v-slot="{field, handleChange}"
+      :class="{'form__input--error': errors.title}"
+     )
+      input.form__input(
+        v-bind="field"
+        :readonly="!isEditable"
+        @change="handleChange"
+      )
+    ErrorMessage(
+      name="title"
+      as="div" class="form__error"
+    )
   .form__field-wrap
     label.form__label Date
-    Field(name="date"  class="form__input" v-slot="{field}")
-      input-date-time(name="date" v-bind="field"  :class="{'form__input--error': errors.date}")
+    Field(
+      name="date"
+      class="form__input"
+      v-slot="{field}"
+    )
+      input-date-time(
+        name="date"
+        v-bind="field"
+        :isDisabled="!isEditable"
+        :class="{'form__input--error': errors.date}"
+      )
     ErrorMessage(name="date" as="div" class="form__error")
   .form__field-wrap
     label.form__label Text
-    Field(name="text" class="form__input"  as="textarea" :class="{'form__input--error': errors.text}")
+    Field(
+      name="text"
+      class="form__input"
+      as="textarea"
+      :readonly="!isEditable"
+      :class="{'form__input--error': errors.text}"
+    )
     ErrorMessage(name="text" as="div" class="form__error")
   .form__actions
       app-button.form__button.button--primary(v-if="!isEditable" @click="editCard") Edit

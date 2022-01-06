@@ -4,6 +4,7 @@
     @onChange="eventChange"
     class="input-date"
     :config="config"
+    :disabled="isDisabled"
     :placeholder="placeholder"
     :name="name"/>
 </template>
@@ -27,6 +28,10 @@ export default defineComponent({
     placeholder: {
       type: String,
       default: 'Select date'
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false
     }
   },
   setup (props, context) {
