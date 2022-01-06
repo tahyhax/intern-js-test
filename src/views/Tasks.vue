@@ -19,7 +19,7 @@
 
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive, ref } from 'vue'
+import { defineComponent, onBeforeUpdate, onMounted, reactive, ref } from 'vue'
 import { ETaskStatus, ITask } from '@/types/task'
 import TaskForm from '@/components/Task/TaskFrom.vue'
 import TaskItem from '@/components/Task/TaskItem.vue'
@@ -58,7 +58,7 @@ export default defineComponent({
         date: '2021-12-09 14:26'
       }
     ])
-    const itemRefs: HTMLElement[] = []
+    let itemRefs: HTMLElement[] = []
     const setItemRef = (el: any) => {
       if (el) {
         itemRefs.push(el.$el)
@@ -93,6 +93,9 @@ export default defineComponent({
 
     onMounted(() => {
       fontScale(itemRefs, 200, 'grow-animation')
+    })
+    onBeforeUpdate(() => {
+      itemRefs = []
     })
 
     return {
