@@ -3,7 +3,7 @@ vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="card" v
   .form__field-wrap
     label.form__label Title
     Field(name="title"  v-slot="{field, handleChange}" :class="{'form__input--error': errors.title}")
-      <input class="form__input"  @change="handleChange" :value="field.value" />
+      input.form__input(@change="handleChange" v-bind="field")
     ErrorMessage(name="title" as="div" class="form__error")
   .form__field-wrap
     label.form__label Date
@@ -22,8 +22,8 @@ vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="card" v
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from 'vue'
-import { ErrorMessage, Field, Form as VeeForm, FormActions, FormState } from 'vee-validate'
+import { defineComponent, PropType, ref } from 'vue'
+import { ErrorMessage, Field, Form as VeeForm } from 'vee-validate'
 import { object as YObject, string as YString } from 'yup'
 import AppModal from '@/components/ui/AppModal.vue'
 import AppButton from '@/components/ui/AppButton.vue'
