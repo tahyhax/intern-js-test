@@ -121,6 +121,7 @@ $buttonColor: #FFFFFF;
   }
 
   &__label {
+    color: #000000;
     margin: 0 0 5px 10px;
   }
 
