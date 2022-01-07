@@ -4,7 +4,7 @@ aside#sidebar.sidebar.sidebar-container
     .logo-search__logo
       img.logo-search__logo-img(src="../assets/Logo@3x.svg" alt="sidebar-logo")
       h1.logo-search__logo-title
-      | Projectus
+        | Projectus
     form.logo-search__search
       .logo-search__search-icon
         button.logo-search__search-button( name="search")
@@ -85,6 +85,7 @@ export default defineComponent({
   min-height: 100%;
   font-size: 14px;
   color: #ffffff;
+  z-index: 1;
 
   &--active {
     z-index: 1;
@@ -135,7 +136,6 @@ export default defineComponent({
     top: 0;
     left: 0;
     background: #000;
-    width: 40%;
     &--active {
       display: block;
       width: 75%;
@@ -145,67 +145,6 @@ export default defineComponent({
     &--active {
       display: block;
       width: 100%;
-    }
-  }
-}
-
-.burger {
-  position: relative;
-  display: block;
-  padding: 10px 10px;
-  background-color: #f2f2f2;
-  border-radius: 50%;
-  z-index: 100;
-  @media (min-width: 767px) {
-    display: none;
-  }
-
-  &--active {
-    top: 3px;
-  }
-
-  &--active & {
-    &__item {
-      background: transparent;
-    }
-
-    &__item::after {
-      transform: translateY(-8px) rotate(-45deg);
-    }
-
-    &__item::before {
-      transform: translateY(8px) rotate(45deg);
-    }
-  }
-
-  &__item {
-    position: relative;
-    margin-top: 8px;
-    margin-bottom: 8px;
-
-    &,
-    &::after,
-    &::before {
-      display: block;
-      width: 20px;
-      height: 2px;
-      background-color: #222;
-      transition-property: background-color, transform;
-      transition-duration: 0.3s;
-    }
-
-    &::after,
-    &::before {
-      position: absolute;
-      content: "";
-    }
-
-    &::after {
-      top: 8px;
-    }
-
-    &::before {
-      top: -8px;
     }
   }
 }

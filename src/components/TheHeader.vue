@@ -162,5 +162,65 @@ export default defineComponent({
     background-image: url("../assets/Combined_Shape@1x.svg");
   }
 }
+.burger {
+  position: relative;
+  display: block;
+  padding: 10px 10px;
+  background-color: #f2f2f2;
+  border-radius: 50%;
+  z-index: 100;
+  @media (min-width: 767px) {
+    display: none;
+  }
+
+  &--active {
+    top: 3px;
+  }
+
+  &--active & {
+    &__item {
+      background: transparent;
+    }
+
+    &__item::after {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    &__item::before {
+      transform: translateY(8px) rotate(45deg);
+    }
+  }
+
+  &__item {
+    position: relative;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
+    &,
+    &::after,
+    &::before {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background-color: #222;
+      transition-property: background-color, transform;
+      transition-duration: 0.3s;
+    }
+
+    &::after,
+    &::before {
+      position: absolute;
+      content: "";
+    }
+
+    &::after {
+      top: 8px;
+    }
+
+    &::before {
+      top: -8px;
+    }
+  }
+}
 
 </style>
