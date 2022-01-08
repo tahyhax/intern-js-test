@@ -2,7 +2,7 @@
 header.header
   .header__logo-action
     .header__logo
-      #burger.burger
+      #burger.burger(@click="onToggle")
         .burger__item
       .header__logo-icon
         img( width="40" height="40" src="~@/assets/Shapes@2x.png" alt='Website Redesign')
@@ -51,7 +51,16 @@ import AppAvatar from '@/components/ui/AppAvatar.vue'
 
 export default defineComponent({
   name: 'TheHeader',
-  components: { AppButton, AppAvatar, AppDots, TheHeaderNavigation }
+  components: { AppButton, AppAvatar, AppDots, TheHeaderNavigation },
+  props: {
+    modelValue: Boolean
+  },
+  setup (props, { emit }) {
+    const onToggle = () => {
+      emit('update:modelValue', !props.modelValue)
+    }
+    return { onToggle }
+  }
 })
 </script>
 

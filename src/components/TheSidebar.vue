@@ -131,7 +131,6 @@ export default defineComponent({
   }
 
   @media (max-width: 767px) {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
