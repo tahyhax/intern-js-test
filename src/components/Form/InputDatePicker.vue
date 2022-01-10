@@ -4,6 +4,7 @@
     @onChange="eventChange"
     class="input-date"
     :config="config"
+    :disabled="isDisabled"
     :placeholder="placeholder"
     :name="name"/>
 </template>
@@ -27,16 +28,19 @@ export default defineComponent({
     placeholder: {
       type: String,
       default: 'Select date'
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false
     }
   },
   setup (props, context) {
     const config = {
       altFormat: 'Y-m-d H:i',
       altInput: true,
-      enableTime: true,
-      minDate: new Date().toUTCString()
+      enableTime: true
     }
-    const date = ref(new Date(context.attrs.modelValue).toUTCString())
+    const date = ref(new Date(context.attrs.value).toUTCString())
     return { config, date }
   },
 
@@ -45,7 +49,7 @@ export default defineComponent({
       this.$refs.input.focus()
     },
     eventChange (selectedDates, dateStr) {
-      this.$emit('update:modelValue', dateStr)
+      this.$emit('update:value', dateStr)
     }
   }
 })
@@ -53,10 +57,12 @@ export default defineComponent({
 
 <style lang="scss" itemscope>
 .input-date {
-  padding: 5px;
+  padding: 10px;
   border-radius: 10px;
   overflow: hidden;
   outline: none;
   max-width: 100%;
+  background: #eaeaea;
+
 }
 </style>

@@ -1,25 +1,29 @@
 <template lang="pug">
-.task-from
-  h3.task-from__head
-    | Create
-  .task-form__body
-    vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="task" v-slot="{ errors, isSubmitting, handleReset}" class="form" ref="form" )
-      .form__field-wrap
-        label.form__label Title
-        Field(name="title"  class="form__input" :class="{'form__input--error': errors.title}")
-        ErrorMessage(name="title" as="div" class="form__error")
-      .form__field-wrap
-        label.form__label Date
-        Field(name="date"  class="form__input" :class="{'form__input--error': errors.date}" v-slot="{field}")
-          input-date-time(name="date" v-bind="field" )
-        ErrorMessage(name="date" as="div" class="form__error" :class="{'form__input--error': errors.date}")
-      .form__field-wrap
-        label.form__label Text
-        Field(name="text" class="form__input"  as="textarea" :class="{'form__input--error': errors.text}")
-        ErrorMessage(name="text" as="div" class="form__error")
-      .form__actions
-        app-button.form__button.button--secondary(@click="handleReset") Reset
-        app-button.form__button.button--primary(:disabled="isSubmitting") Create
+app-modal(
+  :isActive="isActiveForm"
+  @onClose="handlerOnCLose"
+  )
+  template(#header)
+    | Create Task
+  template(#body)
+     vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="task" v-slot="{ errors, isSubmitting, handleReset}" class="form" ref="form" )
+        .form__field-wrap
+          label.form__label Title
+          Field(name="title"  class="form__input" :class="{'form__input--error': errors.title}")
+          ErrorMessage(name="title" as="div" class="form__error")
+        .form__field-wrap
+          label.form__label Date
+          Field(name="date"  class="form__input" v-slot="{field}")
+            input-date-time(name="date" v-bind="field"  :class="{'form__input--error': errors.date}")
+          ErrorMessage(name="date" as="div" class="form__error")
+        .form__field-wrap
+          label.form__label Text
+          Field(name="text" class="form__input"  as="textarea" :class="{'form__input--error': errors.text}")
+          ErrorMessage(name="text" as="div" class="form__error")
+        .form__actions
+            app-button.form__button.button--secondary(@click="handleReset") Reset
+            app-button.form__button.button--primary(:disabled="isSubmitting") Create
+
 </template>
 
 <script lang="ts">
@@ -27,6 +31,7 @@ import { defineComponent } from 'vue'
 import { ErrorMessage, Field, Form as VeeForm, FormActions, FormState } from 'vee-validate'
 import { object as YObject, string as YString } from 'yup'
 import AppButton from '@/components/ui/AppButton.vue'
+import AppModal from '@/components/ui/AppModal.vue'
 import inputDateTime from '@/components/Form/InputDatePicker.vue'
 import { ETaskStatus, ITask } from '@/types/task'
 import { uuid } from '@/utils'
@@ -35,10 +40,17 @@ export default defineComponent({
   name: 'TaskFrom',
   components: {
     AppButton,
+    AppModal,
     VeeForm,
     Field,
     ErrorMessage,
     inputDateTime
+  },
+  props: {
+    isActiveForm: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     const schema = YObject().shape({
@@ -48,6 +60,7 @@ export default defineComponent({
     })
     return {
       schema,
+      // isActiveModal: false,
       task: {
         _id: uuid(),
         title: '',
@@ -59,10 +72,16 @@ export default defineComponent({
   },
 
   methods: {
-    // NOTE как сделать правильно параметр actions
-    onSubmit (values:ITask, actions:FormActions<Partial<FormState<string>>>):void {
+    onSubmit (values: ITask, actions: FormActions<Partial<FormState<string>>>): void {
       this.$emit('onSubmit', values)
       actions.resetForm()
+      this.closeModel()
+    },
+    closeModel () {
+      this.$emit('onCloseForm')
+    },
+    handlerOnCLose () {
+      this.closeModel()
     }
   }
 })
@@ -101,7 +120,7 @@ $buttonColor: #FFFFFF;
   &__button {
     width: 100px;
     color: $buttonColor;
-    margin-right:10px;
+    margin-right: 10px;
   }
 
   &__label {
@@ -109,7 +128,8 @@ $buttonColor: #FFFFFF;
   }
 
   &__input {
-    padding: 5px;
+    padding: 10px;
+    background: #eaeaea;
     border-radius: 10px;
     overflow: hidden;
     outline: none;

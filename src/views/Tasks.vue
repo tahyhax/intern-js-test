@@ -1,9 +1,12 @@
 <template lang="pug">
 .task
+  task-form(@onSubmit="handlerSubmit" @onCloseForm="handlerCloseForm" :isActiveForm="isActiveForm" )
   header.task__header
     h3 Today
+    .task__header-actions
+      app-button.button--primary(@click="openForm")
+        | New task
   .task__body
-    task-form(@onSubmit="addTask")
     transition-group(class="task__list" tag="div" name="bounce")
       task-item(v-for="(task, key) in tasks"
         :ref="setItemRef"
@@ -13,21 +16,25 @@
         @onCompleteTask="completeTask"
         @onDestroyTask="destroyTask(key)"
       )
+
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from 'vue'
+import { defineComponent, onBeforeUpdate, onMounted, reactive, ref } from 'vue'
 import { ETaskStatus, ITask } from '@/types/task'
 import TaskForm from '@/components/Task/TaskFrom.vue'
 import TaskItem from '@/components/Task/TaskItem.vue'
+import AppButton from '@/components/ui/AppButton.vue'
 import { uuid } from '@/utils'
 
 export default defineComponent({
   name: 'Tasks',
   components: {
     TaskForm,
-    TaskItem
+    TaskItem,
+    AppButton
   },
   setup: function () {
+    const isActiveForm = ref(false)
     const tasks = reactive<ITask[]>([
       {
         _id: uuid(),
@@ -51,7 +58,7 @@ export default defineComponent({
         date: '2021-12-09 14:26'
       }
     ])
-    const itemRefs: HTMLElement[] = []
+    let itemRefs: HTMLElement[] = []
     const setItemRef = (el: any) => {
       if (el) {
         itemRefs.push(el.$el)
@@ -66,7 +73,7 @@ export default defineComponent({
       })
     }
 
-    const addTask = (task: ITask): void => {
+    const handlerSubmit = (task: ITask): void => {
       tasks.push(task)
     }
 
@@ -77,16 +84,29 @@ export default defineComponent({
     const completeTask = (index: number): void => {
       tasks[index].status = ETaskStatus.done
     }
+    const openForm = () => {
+      isActiveForm.value = true
+    }
+    const handlerCloseForm = (): void => {
+      isActiveForm.value = false
+    }
 
     onMounted(() => {
       fontScale(itemRefs, 200, 'grow-animation')
     })
+    onBeforeUpdate(() => {
+      itemRefs = []
+    })
+
     return {
+      isActiveForm,
       setItemRef,
       tasks,
-      addTask,
+      handlerSubmit,
       destroyTask,
-      completeTask
+      completeTask,
+      openForm,
+      handlerCloseForm
     }
   }
 })
@@ -105,11 +125,25 @@ export default defineComponent({
   }
 
   &__header {
+    display: flex;
+    justify-content: space-between;
     text-transform: uppercase;
     opacity: 0.5;
     font-size: 14px;
     color: #131313;
     margin-bottom: 2px;
+
+  }
+
+  &__header-actions {
+    display: flex;
+    flex:1 0 auto;
+    align-items: center;
+    justify-content: flex-end;
+    .button {
+      width: 20%;
+      font-weight: bold;
+    }
   }
 
   &__body {
