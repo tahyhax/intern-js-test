@@ -13,14 +13,19 @@ section.kanban
     .kanban__filters.filters
       .filters__item
         input.filters__input.filters__input--search(v-model="searchString" placeholder="Search by title")
+      .filters__item
+        date-range(
+          name="date"
+          v-model="dateRange"
+        )
     .kanban__board
-       kanban-column(
+      kanban-column(
         v-for="(column, key) in kanbanList"
         @onDrugTask="handlerDrugTask"
         :column="column"
         :key="`kanban-${key}`"
         @onTaskDetail="handleTaskDetail"
-      )
+        )
 </template>
 
 <script lang="ts">
@@ -28,14 +33,19 @@ import { computed, defineComponent, reactive, ref } from 'vue'
 import KanbanColumn from '@/components/Kanban/KanbanColumn.vue'
 import AppModal from '@/components/ui/AppModal.vue'
 import KanbanCardDetail from '@/components/Kanban/KanbanCardDetail.vue'
-import inputDateTime from '@/components/Form/InputDatePicker.vue'
+import DateRange from '@/components/Form/fitlers/DateRange.vue'
 import { ETaskStatus, ITask } from '@/types/task'
 import { IKanbanColumns } from '@/types/kanbanColumns'
 import { uuid } from '@/utils'
 
 export default defineComponent({
   name: 'kanban',
-  components: { AppModal, KanbanCardDetail, KanbanColumn, inputDateTime },
+  components: {
+    AppModal,
+    KanbanCardDetail,
+    KanbanColumn,
+    DateRange
+  },
   setup: function () {
     const kanbanColumns = [
       {
@@ -120,24 +130,24 @@ export default defineComponent({
 
     const taskToShow = ref({})
     const isTaskShow = ref<boolean>(false)
-    const searchString = ref <string>('')
-    const dateRange = reactive([])
+    const searchString = ref<string>('')
+    const dateRange = ref([])
     const kanbanList = computed(() => {
       return kanbanColumns.map(column => {
         return {
           ...column,
           tasks: tasks
-            // TODO make this  filter
-            // .filter((item:ITask) => {
-            //   return +new Date('2022-01-20 14:23') <= +new Date(item.date) && +new Date('2022-01-20 14:23') <= +new Date(item.date)
-            // })
-            .filter((item:ITask) => item.title.indexOf(searchString.value) !== -1)
+            .filter((item: ITask) => {
+              return !dateRange.value.length ||
+                (+new Date(dateRange.value[0]) <= +new Date(item.date) && +new Date(dateRange.value[1]) >= +new Date(item.date))
+            })
+            .filter((item: ITask) => item.title.indexOf(searchString.value) !== -1)
             .filter((task) => task.status === column.type)
         }
       })
     })
 
-    const handleTaskDetail = (task:ITask) => {
+    const handleTaskDetail = (task: ITask) => {
       taskToShow.value = task
       isTaskShow.value = true
     }
@@ -151,9 +161,12 @@ export default defineComponent({
       tasks.splice(taskIndex, 1, task)
       handlerOnCLose()
     }
-    const handlerDrugTask = (druggableData: {item:ITask, newStatus:ETaskStatus}) => {
+    const handlerDrugTask = (druggableData: { item: ITask, newStatus: ETaskStatus }) => {
       // eslint-disable-next-line no-return-assign
-      const { item: droppableTask, newStatus } = druggableData
+      const {
+        item: droppableTask,
+        newStatus
+      } = druggableData
       if (droppableTask.status === ETaskStatus.done && newStatus === ETaskStatus.todo) {
         alert('You cannot perform this action. If the status of the task is Done, you cannot change the status in Todo')
         return false
@@ -163,7 +176,17 @@ export default defineComponent({
       task.status = newStatus
       tasks.splice(taskIndex, 0, task)
     }
-    return { isTaskShow, taskToShow, searchString, dateRange, kanbanList, handleTaskDetail, handlerOnCLose, handlerDrugTask, handlerSubmit }
+    return {
+      isTaskShow,
+      taskToShow,
+      searchString,
+      dateRange,
+      kanbanList,
+      handleTaskDetail,
+      handlerOnCLose,
+      handlerDrugTask,
+      handlerSubmit
+    }
   }
 })
 </script>
@@ -171,15 +194,18 @@ export default defineComponent({
 <style lang="scss" itemscope>
 .kanban {
   width: 100%;
+
   &__container {
     padding: 0 0.8rem 0.8rem;
   }
-  &__filters{
+
+  &__filters {
     display: flex;
     padding: 15px 0;
     margin-bottom: 10px;
     background-color: #ffffff;
   }
+
   &__board {
     display: flex;
     align-items: flex-start;
@@ -209,16 +235,19 @@ export default defineComponent({
 
   .filters {
     display: flex;
+
     &__item {
       padding: 0 10px;
     }
+
     &__input {
       padding: 10px;
       background: #eaeaea;
       border-radius: 10px;
       outline: none;
       max-width: 100%;
-      &--serach{
+
+      &--serach {
       }
     }
   }
