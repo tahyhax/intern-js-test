@@ -1,15 +1,16 @@
 <template lang="pug">
 the-layout
   template(v-slot:sidebar)
-    the-sidebar(:user='user' @updateTask="updateTask")/
+    the-sidebar(:user='user'  @updateTask="updateTask" v-show="isActiveSidebar")/
   template(v-slot:header)
-    the-header/
+    the-header(v-model="isBurgerActive")
   template(v-slot:default)
     router-view(@update-notification="onUpdateNotification")/
+
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, ref, defineComponent, onUnmounted } from 'vue'
 import TheLayout from '@/components/TheLayout.vue'
 import TheSidebar from '@/components/TheSidebar.vue'
 import TheHeader from '@/components/TheHeader.vue'
@@ -22,44 +23,51 @@ export default defineComponent({
     TheSidebar,
     TheHeader
   },
-  data () {
-    return {
-      user: {
-        lastname: 'Jean',
-        firstname: 'Gonzales',
-        position: 'Product Owner',
-        logo: '../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg', // NOTE  how  this  work
-        notifications: 3,
-        task: {
-          open: 11,
-          complete: 372
-        }
-      } as IUser
+  setup () {
+    const user = {
+      lastname: 'Jean',
+      firstname: 'Gonzales',
+      position: 'Product Owner',
+      logo: '../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg', // NOTE  how  this  work
+      notifications: 3,
+      task: {
+        open: 11,
+        complete: 372
+      }
+    } as IUser
+    const isBurgerActive = ref<boolean>(false)
+    const clientWidth = ref<number>(window.innerWidth)
+    const breakpointHide = 767
+    const isActiveSidebar = computed(() => { return (clientWidth.value < breakpointHide && isBurgerActive.value) || clientWidth.value >= breakpointHide })
+
+    window.addEventListener('resize', handleResize)
+    function handleResize () {
+      clientWidth.value = window.innerWidth
     }
-  },
-  methods: {
-    updateTask (type: 'complete' | 'open') {
+    const updateTask = (type: 'complete' | 'open') => {
       const revertType = type === 'complete' ? 'open' : 'complete'
       const messageConfirm = 'Are you sure you want to change the number of tasks?'
-      if (this.validateTask(type)) {
+      if (validateTask(type)) {
         const messageError = `All tasks are ${revertType} !`
         alert(messageError)
         return false
       }
-
       if (confirm(messageConfirm)) {
-        this.user.task[type]--
-        this.user.task[revertType]++
+        user.task[type]--
+        user.task[revertType]++
       }
-    },
-    validateTask (type: 'complete' | 'open'): boolean {
-      return !this.user.task[type]
-    },
-    onUpdateNotification (index:number): void {
-      this.user.notifications = index
     }
+    const validateTask = (type: 'complete' | 'open'): boolean => {
+      return !user.task[type]
+    }
+    const onUpdateNotification = (index:number): void => {
+      user.notifications = index
+    }
+    onUnmounted(() => { window.removeEventListener('resize', handleResize) })
 
+    return { user, isBurgerActive, isActiveSidebar, updateTask, onUpdateNotification, clientWidth }
   }
+
 })
 </script>
 <style lang="scss">

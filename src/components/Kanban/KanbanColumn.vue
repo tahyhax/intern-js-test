@@ -5,10 +5,10 @@
       @dragenter.prevent
     )
   h3.kanban__title
-    | {{column.name}}
-  .kanban-task
-    .kanban-task__list(v-if="column.tasks.length")
-      kanban-column-task(
+    | {{column.name}} {{getCountTitle(column.tasks)}}
+  .kanban-column
+    .kanban-column__container(v-if="column.tasks.length")
+      kanban-column-task.kanban-column__item(
         v-for="task in column.tasks"
         :key="task._id"
         :task="task"
@@ -16,7 +16,7 @@
         @dblclick="onTaskDetail(task)"
         @dragstart="onDragStart($event, task)"
       )
-    .kanban-task__list--empty(v-else) No Tasks
+    .kanban-column__container--empty(v-else) No Tasks
 
 </template>
 
@@ -25,7 +25,6 @@ import { defineComponent, PropType } from 'vue'
 import { IKanbanColumns } from '@/types/kanbanColumns'
 import KanbanColumnTask from '@/components/Kanban/KanbanColumnTask.vue'
 import { ETaskStatus, ITask } from '@/types/task'
-
 export default defineComponent({
   name: 'KanbanColumn',
   components: { KanbanColumnTask },
@@ -36,6 +35,9 @@ export default defineComponent({
     }
   },
   setup: function (props, { emit }) {
+    const getCountTitle = (items: []): string => {
+      return items.length ? `- ${items.length}` : ''
+    }
     const onTaskDetail = (task: ITask) => {
       emit('onTaskDetail', task)
     }
@@ -57,6 +59,7 @@ export default defineComponent({
     }
 
     return {
+      getCountTitle,
       onTaskDetail,
       onDrop,
       onDragStart
@@ -66,8 +69,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.kanban-task {
-  &__list {
+.kanban-column {
+  &__container {
     flex: 1;
     display: flex;
     flex-direction: column;
