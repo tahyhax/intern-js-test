@@ -72,8 +72,8 @@ export default defineComponent({
 
     return {
       isActiveForm,
-      setItemRef,
       tasks,
+      setItemRef,
       handlerTaskCreate,
       handlerTaskDelete,
       handlerTaskUpdateStatus,

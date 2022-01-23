@@ -1,6 +1,6 @@
 <template lang="pug">
 .card(:class="{'card--expired':isExpired}")
-  .card__bar.card__bar--notice(v-if="hasNotice")
+  .card__bar.card__bar--notice(v-if="isLessThanDayExpire")
     .expired-less-then-day(v-if="isLessThanDayExpire") Expire less then day
   .card__container
     .card__title {{task.title}}
@@ -28,13 +28,13 @@ export default defineComponent({
     }
   },
   setup (props) {
+    const ONE_DAY_TIMESTAMP = 24 * 60 * 60 * 1000
     const taskDate = computed(() => new Date(props.task.date).toLocaleDateString())
     const isDone = computed(() => props.task.status === ETaskStatus.done)
     const isInProgress = computed(() => props.task.status === ETaskStatus.inprogresss)
     const isExpired = computed(() => +new Date() > +new Date(props.task.date) && !isDone.value)
-    const isLessThanDayExpire = computed(() => (+new Date(props.task.date) - +new Date()) < (24 * 60 * 60 * 1000) && !isExpired.value && !isDone.value)
-    const hasNotice = computed(() => isLessThanDayExpire.value)
-    return { taskDate, isExpired, isDone, isInProgress, isLessThanDayExpire, hasNotice }
+    const isLessThanDayExpire = computed(() => (+new Date(props.task.date) - +new Date()) < (ONE_DAY_TIMESTAMP) && !isExpired.value && !isDone.value)
+    return { taskDate, isExpired, isDone, isInProgress, isLessThanDayExpire }
   }
 
 })

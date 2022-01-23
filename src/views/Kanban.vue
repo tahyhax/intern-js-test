@@ -24,7 +24,7 @@ section.kanban
         @onDrugTask="handlerDrugTask"
         :column="column"
         :key="`kanban-${key}`"
-        @onTaskDetail="handleTaskDetail"
+        @onTaskDetail="handlerTaskDetail"
         )
 </template>
 
@@ -46,9 +46,9 @@ export default defineComponent({
     DateRange
   },
   setup: function () {
-    // TODO create  component search  and useSarch
+    // TODO create  component search  and useSearch
     const { kanbanList, searchString, dateRange, handlerDrugTask } = useKanban()
-    const { taskToShow, isTaskShow, handleTaskDetail, handlerOnCLose, handlerUpdate: handlerTaskUpdate } = useTask()
+    const { taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose, handlerUpdate: handlerTaskUpdate } = useTask()
 
     return {
       isTaskShow,
@@ -56,7 +56,7 @@ export default defineComponent({
       searchString,
       dateRange,
       kanbanList,
-      handleTaskDetail,
+      handlerTaskDetail,
       handlerOnCLose,
       handlerDrugTask,
       handlerTaskUpdate

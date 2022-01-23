@@ -6,7 +6,7 @@ app-modal(
   template(#header)
     | Create Task
   template(#body)
-     vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="task" v-slot="{ errors, isSubmitting, handleReset}" class="form" ref="form" )
+     vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="taskTemplate" v-slot="{ errors, isSubmitting, handleReset}" class="form" ref="form" )
         .form__field-wrap
           label.form__label Title
           Field(name="title"  class="form__input" :class="{'form__input--error': errors.title}")
@@ -52,36 +52,35 @@ export default defineComponent({
       default: false
     }
   },
-  data () {
+  setup: function (props, { emit }) {
+    const taskTemplate = {
+      _id: uuid(),
+      title: '',
+      text: '',
+      date: '',
+      status: ETaskStatus.todo
+    } as ITask
+
     const schema = YObject().shape({
       title: YString().required().label('title'),
       text: YString().required().label('text'),
       date: YString().required().nullable().label('date')
     })
-    return {
-      schema,
-      // isActiveModal: false,
-      task: {
-        _id: uuid(),
-        title: '',
-        text: '',
-        date: '',
-        status: ETaskStatus.todo
-      } as ITask
-    }
-  },
-
-  methods: {
-    onSubmit (values: ITask, actions: FormActions<Partial<FormState<string>>>): void {
-      this.$emit('onSubmit', values)
+    const onSubmit = (values: ITask, actions: FormActions<Partial<FormState<string>>>): void => {
+      emit('onSubmit', values)
       actions.resetForm()
-      this.closeModel()
-    },
-    closeModel () {
-      this.$emit('onCloseForm')
-    },
-    handlerOnCLose () {
-      this.closeModel()
+      closeModel()
+    }
+    const closeModel = (): void => {
+      emit('onCloseForm')
+    }
+
+    const handlerOnCLose = (): void => {
+      closeModel()
+    }
+
+    return {
+      taskTemplate, schema, onSubmit, handlerOnCLose
     }
   }
 })

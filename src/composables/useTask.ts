@@ -7,7 +7,7 @@ export default function useTask () {
   const store = useStore()
   const isTaskShow = ref<boolean>(false)
   const taskToShow = computed(() => store.state.task.task)
-  const handleTaskDetail = (task: ITask) => {
+  const handlerTaskDetail = (task: ITask) => {
     store.dispatch(`task/${taskActionTypes.GET_TASK}`, task._id)
     isTaskShow.value = true
   }
@@ -32,7 +32,7 @@ export default function useTask () {
   return {
     taskToShow,
     isTaskShow,
-    handleTaskDetail,
+    handlerTaskDetail,
     handlerOnCLose,
     handlerCreate,
     handlerUpdate,
