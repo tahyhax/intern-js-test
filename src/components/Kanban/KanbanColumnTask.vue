@@ -45,10 +45,10 @@ export default defineComponent({
   &__bar {
     display: flex;
     &--notice {
-      justify-content: end;
+      justify-content: flex-end ;
     }
     &--statuses {
-      justify-content: end;
+      justify-content: flex-end ;
     }
   }
   &--expired{
@@ -65,7 +65,7 @@ export default defineComponent({
   }
   &__time {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end ;
     padding: 10px 0;
     font-width: bold;
     &-title {

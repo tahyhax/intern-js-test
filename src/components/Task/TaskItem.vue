@@ -9,8 +9,8 @@
           p {{ task.text }}
     .task-item__time {{ task.date }}
   .task-item__actions
-    app-button.task-item__button.button--primary(v-if="isTodo(task.status)" @click="completeTask(index)") Complete
-    app-button.task-item__button.button--danger(@click="destroyTask(index)") Delete
+    app-button.task-item__button.button--primary(v-if="isTodo(task.status)" @click="completeTask(task._id)") Complete
+    app-button.task-item__button.button--danger(@click="destroyTask(task._id)") Delete
 </template>
 
 <script lang="ts">
@@ -34,15 +34,18 @@ export default defineComponent({
     }
   },
   setup (props, { emit }) {
-    const completeTask = (index: number): void => {
-      emit('onCompleteTask', index)
+    const completeTask = (taskId: string): void => {
+      emit('onCompleteTask', { taskId, newStatus: ETaskStatus.done })
     }
+
+    const destroyTask = (taskId: string):void => {
+      emit('onDestroyTask', taskId)
+    }
+
     const isTodo = (status: string): boolean => {
       return status !== ETaskStatus.done
     }
-    const destroyTask = (index:number):void => {
-      emit('onDestroyTask', index)
-    }
+
     return { completeTask, destroyTask, isTodo }
   }
 })
