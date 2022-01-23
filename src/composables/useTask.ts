@@ -6,6 +6,7 @@ import { taskActionTypes } from '@/store/modules/task.ts'
 export default function useTask () {
   const store = useStore()
   const isTaskShow = ref<boolean>(false)
+  const tasks = computed(() => store.state.task.tasks)
   const taskToShow = computed(() => store.state.task.task)
   const handlerTaskDetail = (task: ITask) => {
     store.dispatch(`task/${taskActionTypes.GET_TASK}`, task._id)
@@ -30,6 +31,7 @@ export default function useTask () {
   }
 
   return {
+    tasks,
     taskToShow,
     isTaskShow,
     handlerTaskDetail,

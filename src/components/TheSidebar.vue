@@ -95,7 +95,7 @@ export default defineComponent({
   min-height: 100%;
   font-size: 14px;
   color: #ffffff;
-  z-index: 1;
+  z-index: 10;
 
   &--active {
     z-index: 1;

@@ -36,8 +36,7 @@ export default defineComponent({
   setup: function () {
     const store = useStore()
     const isActiveForm = ref(false)
-    const tasks = computed(() => store.state.task.tasks)
-    const { handlerCreate: handlerTaskCreate, handlerDelete: handlerTaskDelete, handlerUpdateStatus: handlerTaskUpdateStatus } = useTask()
+    const { tasks, handlerCreate: handlerTaskCreate, handlerDelete: handlerTaskDelete, handlerUpdateStatus: handlerTaskUpdateStatus } = useTask()
 
     // поиидее должно вынетстить useModal
     const openForm = () => {
