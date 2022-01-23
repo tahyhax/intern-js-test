@@ -1,6 +1,6 @@
 <template lang="pug">
 .task
-  task-form(@onSubmit="handlerSubmit" @onCloseForm="handlerCloseForm" :isActiveForm="isActiveForm" )
+  task-form(@onSubmit="handlerTaskCreate" @onCloseForm="handlerCloseForm" :isActiveForm="isActiveForm" )
   header.task__header
     h3 Today
     .task__header-actions
@@ -12,19 +12,19 @@
         :ref="setItemRef"
         :task="task"
         :index="key"
-        :key="`task-${key}`"
-        @onCompleteTask="completeTask"
-        @onDestroyTask="destroyTask(key)"
+        :key="`task-${task._id}`"
+        @onCompleteTask="handlerTaskUpdateStatus"
+        @onDestroyTask="handlerTaskDelete"
       )
 
 </template>
 <script lang="ts">
-import { defineComponent, onBeforeUpdate, onMounted, reactive, ref } from 'vue'
-import { ETaskStatus, ITask } from '@/types/task'
+import { computed, defineComponent, onBeforeUpdate, onMounted, ref } from 'vue'
 import TaskForm from '@/components/Task/TaskFrom.vue'
 import TaskItem from '@/components/Task/TaskItem.vue'
 import AppButton from '@/components/ui/AppButton.vue'
-import { uuid } from '@/utils'
+import { useStore } from 'vuex'
+import useTask from '@/composables/useTask.ts'
 
 export default defineComponent({
   name: 'Tasks',
@@ -34,30 +34,20 @@ export default defineComponent({
     AppButton
   },
   setup: function () {
+    const store = useStore()
     const isActiveForm = ref(false)
-    const tasks = reactive<ITask[]>([
-      {
-        _id: uuid(),
-        title: 'task 1',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
-        status: ETaskStatus.todo,
-        date: '2021-12-09 14:23'
-      },
-      {
-        _id: uuid(),
-        title: 'task 2',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
-        status: ETaskStatus.todo,
-        date: '2021-12-09 14:24'
-      },
-      {
-        _id: uuid(),
-        title: 'task 3',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged',
-        status: ETaskStatus.todo,
-        date: '2021-12-09 14:26'
-      }
-    ])
+    const tasks = computed(() => store.state.task.tasks)
+    const { handlerCreate: handlerTaskCreate, handlerDelete: handlerTaskDelete, handlerUpdateStatus: handlerTaskUpdateStatus } = useTask()
+
+    // поиидее должно вынетстить useModal
+    const openForm = () => {
+      isActiveForm.value = true
+    }
+    const handlerCloseForm = (): void => {
+      isActiveForm.value = false
+    }
+    // ----------------
+
     let itemRefs: HTMLElement[] = []
     const setItemRef = (el: any) => {
       if (el) {
@@ -73,24 +63,6 @@ export default defineComponent({
       })
     }
 
-    const handlerSubmit = (task: ITask): void => {
-      tasks.push(task)
-    }
-
-    const destroyTask = (index: number): void => {
-      tasks.splice(index, 1)
-    }
-
-    const completeTask = (index: number): void => {
-      tasks[index].status = ETaskStatus.done
-    }
-    const openForm = () => {
-      isActiveForm.value = true
-    }
-    const handlerCloseForm = (): void => {
-      isActiveForm.value = false
-    }
-
     onMounted(() => {
       fontScale(itemRefs, 200, 'grow-animation')
     })
@@ -102,9 +74,9 @@ export default defineComponent({
       isActiveForm,
       setItemRef,
       tasks,
-      handlerSubmit,
-      destroyTask,
-      completeTask,
+      handlerTaskCreate,
+      handlerTaskDelete,
+      handlerTaskUpdateStatus,
       openForm,
       handlerCloseForm
     }
