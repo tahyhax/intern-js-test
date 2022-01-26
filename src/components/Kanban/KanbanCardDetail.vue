@@ -70,10 +70,6 @@ export default defineComponent({
     card: {
       required: true,
       type: Object as PropType<ITask>
-    },
-    isShow: {
-      type: Boolean,
-      default: false
     }
   },
   setup (props, { emit }) {
