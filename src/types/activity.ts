@@ -7,6 +7,7 @@ export enum EActivity {
 
 export interface IAttachment {
   _id: string,
+  title: string
   src: string,
   description: string
 }
@@ -16,5 +17,5 @@ export interface IActivity {
   text: string,
   type: EActivity,
   created: string,
-  attachments?: IAttachment[]
+  attachments: IAttachment[] | []
 }
