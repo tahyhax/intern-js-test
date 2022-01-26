@@ -15,8 +15,6 @@ export enum taskMutationTypes {
   UPDATE_TASK = 'UPDATE_TASK',
   DELETE_TASK = 'DELETE_TASK',
   UPDATE_TASK_STATUS = 'UPDATE_TASK_STATUS',
-  // UPDATE_STATUS = 'UPDATE_STATUS',
-  // UPDATE_STATUS_DRUG = 'UPDATE_STATUS_DRUG',
 }
 export interface ITasksStore {
   tasks: ITask[];
