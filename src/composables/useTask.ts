@@ -8,8 +8,8 @@ export default function useTask () {
   const isTaskShow = ref<boolean>(false)
   const tasks = computed(() => store.state.task.tasks)
   const taskToShow = computed(() => store.state.task.task)
-  const handlerTaskDetail = (task: ITask) => {
-    store.dispatch(`task/${taskActionTypes.GET_TASK}`, task._id)
+  const handlerTaskDetail = (taskId: string) => {
+    store.dispatch(`task/${taskActionTypes.GET_TASK}`, taskId)
     isTaskShow.value = true
   }
   // NOTE ТАска не должна ничего знать ха модальное окно
