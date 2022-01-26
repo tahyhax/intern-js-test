@@ -5,16 +5,11 @@ export default function useCalendar (tasksList) {
     return {
       key: key,
       customData: {
+        _id: task._id,
         title: task.title,
         class: `calendar__event-title--${task.status}`
       },
       dates: new Date(task.date)
-    }
-    return {
-      _id: task._id,
-      title: task.title,
-      dates: new Date(task.date),
-      class: `calendar__event-title--${task.status}`
     }
   })
 

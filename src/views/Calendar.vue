@@ -1,9 +1,18 @@
 <template lang="pug">
+app-modal(
+  v-if="isTaskShow"
+  :isActive="isTaskShow"
+  @onClose="handlerOnCLose"
+)
+  template(#header)
+    | {{ taskToShow.title }}
+  template(#body)
+    calendar-task-detail(:card="taskToShow" :isReadOnly="true")
 .calendar
   v-calendar(
     class="custom-calendar"
     :masks="calendarMasks"
-    :attributes="attributes"
+    :attributes="tasks"
     disable-page-swipe
     is-expanded
   )
@@ -15,24 +24,28 @@
             :key="attr.key"
             class="calendar__event-title"
             :class="attr.customData.class"
+            @click="handlerTaskDetail(attr.customData._id)"
         ) {{ attr.customData.title }}
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import { Calendar } from 'v-calendar'
+import AppModal from '../components/ui/AppModal'
+import CalendarTaskDetail from '../components/Calendar/CalendarTaskDetail'
 import useCalendar from '../composables/useCalendar'
 import useTask from '../composables/useTask'
 
 export default defineComponent({
-  components: { 'v-calendar': Calendar },
+  components: { 'v-calendar': Calendar, AppModal, CalendarTaskDetail },
   setup: function () {
     const calendarMasks = {
       weekdays: 'WWW'
     }
-    const { tasks: tasksList } = useTask()
-    const { tasks: attributes } = useCalendar(tasksList.value)
-    return { calendarMasks, attributes }
+    const { tasks: tasksList, taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose } = useTask()
+
+    const { tasks } = useCalendar(tasksList.value)
+    return { calendarMasks, tasks, taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose }
   }
 })
 </script>
