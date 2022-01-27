@@ -18,13 +18,15 @@ export default function useKanban () {
         tasks: tasks.value
           .filter((item: ITask) => item.status === column.type)
           .filter((item: ITask) => {
+            const taskDate = new Date(item.date).setHours(0, 0, 0, 0)
             return !dateRange.value.length ||
-              (+new Date(dateRange.value[0]) <= +new Date(item.date) && +new Date(dateRange.value[1]) >= +new Date(item.date))
+              (+new Date(dateRange.value[0]) <= taskDate && +new Date(dateRange.value[1]) >= taskDate)
           })
           .filter((item: ITask) => item.title.indexOf(searchString.value) !== -1)
       }
     })
   })
+
   const handlerDrugTask = (druggableData: { item: ITask, newStatus: ETaskStatus }) => {
     // eslint-disable-next-line no-return-assign
     const { item: droppableTask, newStatus } = druggableData
