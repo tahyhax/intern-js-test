@@ -7,9 +7,10 @@ export default function useCalendar (tasksList) {
       customData: {
         _id: task._id,
         title: task.title,
+        date: task.createdAt,
         class: `calendar__event-title--${task.status}`
       },
-      dates: new Date(task.date)
+      dates: new Date(task.createdAt)
     }
   })
 

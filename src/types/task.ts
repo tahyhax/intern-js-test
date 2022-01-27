@@ -9,5 +9,6 @@ export interface ITask {
     title: string,
     text: string,
     date: string,
-    status: ETaskStatus
+    status: ETaskStatus,
+    createdAt: string,
 }

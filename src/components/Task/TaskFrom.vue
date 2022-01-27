@@ -58,7 +58,8 @@ export default defineComponent({
       title: '',
       text: '',
       date: '',
-      status: ETaskStatus.todo
+      status: ETaskStatus.todo,
+      createdAt: new Date().toISOString()
     } as ITask
 
     const schema = YObject().shape({
