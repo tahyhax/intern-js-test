@@ -17,16 +17,16 @@ export default function useTask () {
     isTaskShow.value = false
   }
 
-  const handlerCreate = (task: ITask) => {
+  const handlerTaskCreate = (task: ITask) => {
     store.dispatch(`task/${taskActionTypes.ADD_TASK}`, task)
   }
-  const handlerUpdate = (task: ITask) => {
+  const handlerTaskUpdate = (task: ITask) => {
     store.dispatch(`task/${taskActionTypes.UPDATE_TASK}`, task)
   }
-  const handlerDelete = (taskId: string) => {
+  const handlerTaskDelete = (taskId: string) => {
     store.dispatch(`task/${taskActionTypes.DELETE_TASK}`, taskId)
   }
-  const handlerUpdateStatus = (payload: { taskId: string, nesStatus: ETaskStatus }) => {
+  const handlerTaskUpdateStatus = (payload: { taskId: string, nesStatus: ETaskStatus }) => {
     store.dispatch(`task/${taskActionTypes.UPDATE_TASK_STATUS}`, payload)
   }
 
@@ -36,9 +36,9 @@ export default function useTask () {
     isTaskShow,
     handlerTaskDetail,
     handlerOnCLose,
-    handlerCreate,
-    handlerUpdate,
-    handlerDelete,
-    handlerUpdateStatus
+    handlerTaskCreate,
+    handlerTaskUpdate,
+    handlerTaskDelete,
+    handlerTaskUpdateStatus
   }
 }

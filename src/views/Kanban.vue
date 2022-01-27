@@ -48,7 +48,7 @@ export default defineComponent({
   setup: function () {
     // TODO create  component search  and useSearch
     const { kanbanList, searchString, dateRange, handlerDrugTask } = useKanban()
-    const { taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose, handlerUpdate: handlerTaskUpdate } = useTask()
+    const { taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose, handlerTaskUpdate } = useTask()
 
     return {
       isTaskShow,
