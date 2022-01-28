@@ -1,6 +1,6 @@
 <template lang="pug">
 .task
-  task-form(@onSubmit="handlerTaskCreate" @onCloseForm="handlerCloseForm" :isActiveForm="isActiveForm" )
+  task-form(v-if="isActiveForm" @onSubmit="handlerTaskCreate" @onCloseForm="handlerCloseForm" :isActiveForm="isActiveForm" )
   header.task__header
     h3 Today
     .task__header-actions
