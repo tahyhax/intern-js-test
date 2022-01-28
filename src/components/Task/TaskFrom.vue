@@ -9,7 +9,7 @@ app-modal(
      vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="taskTemplate" v-slot="{ errors, isSubmitting, handleReset}" class="form" ref="form" )
         .form__field-wrap
           label.form__label Title
-          Field(name="title"  class="form__input" :class="{'form__input--error': errors.title}")
+          Field(name="title"  class="form__input" placeholder="Title" :class="{'form__input--error': errors.title}")
           ErrorMessage(name="title" as="div" class="form__error")
         .form__field-wrap
           label.form__label Date
@@ -18,7 +18,7 @@ app-modal(
           ErrorMessage(name="date" as="div" class="form__error")
         .form__field-wrap
           label.form__label Text
-          Field(name="text" class="form__input"  as="textarea" :class="{'form__input--error': errors.text}")
+          Field(name="text" class="form__input"  as="textarea" placeholder="Text" :class="{'form__input--error': errors.text}")
           ErrorMessage(name="text" as="div" class="form__error")
         .form__actions
             app-button.form__button.button--secondary(@click="handleReset") Reset
@@ -124,6 +124,7 @@ $buttonColor: #FFFFFF;
   }
 
   &__label {
+    color: #000000;
     margin: 0 0 5px 10px;
   }
 

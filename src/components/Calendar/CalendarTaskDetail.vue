@@ -8,6 +8,7 @@ vee-form(:initial-values="card" class="form")
      )
       input.form__input(
         v-bind="field"
+        :readonly="true"
       )
   .form__field-wrap
     label.form__label Date
@@ -27,6 +28,7 @@ vee-form(:initial-values="card" class="form")
       name="text"
       class="form__input"
       as="textarea"
+      :readonly="true"
     )
 </template>
 

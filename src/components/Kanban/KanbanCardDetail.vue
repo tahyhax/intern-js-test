@@ -9,6 +9,7 @@ vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="card" v
      )
       input.form__input(
         v-bind="field"
+        placeholder="Title"
         :readonly="!isEditable"
         @change="handleChange"
       )
@@ -37,6 +38,7 @@ vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="card" v
       class="form__input"
       as="textarea"
       :readonly="!isEditable"
+      placeholder="Text"
       :class="{'form__input--error': errors.text}"
     )
     ErrorMessage(name="text" as="div" class="form__error")
