@@ -13,7 +13,7 @@
         :key="task._id"
         :task="task"
         draggable="true"
-        @dblclick="onTaskDetail(task)"
+        @dblclick="onTaskDetail(task._id)"
         @dragstart="onDragStart($event, task)"
       )
     .kanban-column__container--empty(v-else) No Tasks
@@ -38,8 +38,8 @@ export default defineComponent({
     const getCountTitle = (items: []): string => {
       return items.length ? `- ${items.length}` : ''
     }
-    const onTaskDetail = (task: ITask) => {
-      emit('onTaskDetail', task)
+    const onTaskDetail = (taskId: string) => {
+      emit('onTaskDetail', taskId)
     }
     const onDrop = (event: DragEvent, newStatus: ETaskStatus) => {
       const { dataTransfer } = event

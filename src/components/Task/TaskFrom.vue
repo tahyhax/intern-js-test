@@ -6,10 +6,10 @@ app-modal(
   template(#header)
     | Create Task
   template(#body)
-     vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="task" v-slot="{ errors, isSubmitting, handleReset}" class="form" ref="form" )
+     vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="taskTemplate" v-slot="{ errors, isSubmitting, handleReset}" class="form" ref="form" )
         .form__field-wrap
           label.form__label Title
-          Field(name="title"  class="form__input" :class="{'form__input--error': errors.title}")
+          Field(name="title"  class="form__input" placeholder="Title" :class="{'form__input--error': errors.title}")
           ErrorMessage(name="title" as="div" class="form__error")
         .form__field-wrap
           label.form__label Date
@@ -18,7 +18,7 @@ app-modal(
           ErrorMessage(name="date" as="div" class="form__error")
         .form__field-wrap
           label.form__label Text
-          Field(name="text" class="form__input"  as="textarea" :class="{'form__input--error': errors.text}")
+          Field(name="text" class="form__input"  as="textarea" placeholder="Text" :class="{'form__input--error': errors.text}")
           ErrorMessage(name="text" as="div" class="form__error")
         .form__actions
             app-button.form__button.button--secondary(@click="handleReset") Reset
@@ -52,36 +52,36 @@ export default defineComponent({
       default: false
     }
   },
-  data () {
+  setup: function (props, { emit }) {
+    const taskTemplate = {
+      _id: uuid(),
+      title: '',
+      text: '',
+      date: '',
+      status: ETaskStatus.todo,
+      createdAt: new Date().toISOString()
+    } as ITask
+
     const schema = YObject().shape({
       title: YString().required().label('title'),
       text: YString().required().label('text'),
       date: YString().required().nullable().label('date')
     })
-    return {
-      schema,
-      // isActiveModal: false,
-      task: {
-        _id: uuid(),
-        title: '',
-        text: '',
-        date: '',
-        status: ETaskStatus.todo
-      } as ITask
-    }
-  },
-
-  methods: {
-    onSubmit (values: ITask, actions: FormActions<Partial<FormState<string>>>): void {
-      this.$emit('onSubmit', values)
+    const onSubmit = (values: ITask, actions: FormActions<Partial<FormState<string>>>): void => {
+      emit('onSubmit', values)
       actions.resetForm()
-      this.closeModel()
-    },
-    closeModel () {
-      this.$emit('onCloseForm')
-    },
-    handlerOnCLose () {
-      this.closeModel()
+      closeModel()
+    }
+    const closeModel = (): void => {
+      emit('onCloseForm')
+    }
+
+    const handlerOnCLose = (): void => {
+      closeModel()
+    }
+
+    return {
+      taskTemplate, schema, onSubmit, handlerOnCLose
     }
   }
 })
@@ -124,6 +124,7 @@ $buttonColor: #FFFFFF;
   }
 
   &__label {
+    color: #000000;
     margin: 0 0 5px 10px;
   }
 

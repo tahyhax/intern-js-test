@@ -1,74 +1,84 @@
 <template lang="pug">
 aside#sidebar.sidebar.sidebar-container
-  .sidebar__logo-search.logo-search
-    .logo-search__logo
-      img.logo-search__logo-img(src="../assets/Logo@3x.svg" alt="sidebar-logo")
-      h1.logo-search__logo-title
-        | Projectus
-    form.logo-search__search
-      .logo-search__search-icon
-        button.logo-search__search-button( name="search")
-          img( src="../assets/Search@3x.svg" alt="search")
-      input.logo-search__search-input.logo-search__search-input--hidden(type="text" placeholder="Search")
-  div.sidebar__user-info.user-info
-    .user-info__about
-      app-avatar.user-info__logo.logo--big
-        img(src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="Jean Gonzales")
-      .user-info__about-text
-        p.user-info__text--fname {{ fullname }}
-        p.user-info__text--job {{ user.position }}
-    .user-info__dots
-      app-dots/
-  .sidebar__tasks
-    .sidebar__tasks-item
-      p.sidebar__tasks-title(@click="updateCompletedTask") {{ user.task.complete }}
-      p.sidebar__tasks-subtitle
-        | Completed Tasks
-    .sidebar__tasks-item
-      p.sidebar__tasks-title(@click="updateOpenTask") {{ user.task.open }}
-      p.sidebar__tasks-subtitle(@click="($router.push({name:'Tasks'}))")
-        | Open Tasks
-  .sidebar__menu
-    nav.menu
-      p.menu__header Menu
-      ul.menu__body
-        li.menu__item
-          a.menu__link(href="#") Home
-        li.menu__item
-          a.menu__link(href="#") My Tasks
-        li.menu__item
-          a.menu__link(href="#") Notifications
-          span.menu__item-count
-            span {{ user.notifications }}
+    .sidebar__logo-search.logo-search
+      .logo-search__logo
+        img.logo-search__logo-img(src="../assets/Logo@3x.svg" alt="sidebar-logo")
+        h1.logo-search__logo-title
+          | Projectus
+      form.logo-search__search
+        .logo-search__search-icon
+          button.logo-search__search-button( name="search")
+            img( src="../assets/Search@3x.svg" alt="search")
+        input.logo-search__search-input.logo-search__search-input--hidden(type="text" placeholder="Search")
+    div.sidebar__user-info.user-info
+      .user-info__about
+        app-avatar.user-info__logo.logo--big
+          img(src="../assets/images/8081b26e05bb4354f7d65ffc34cbbd67.jpeg" alt="Jean Gonzales")
+        .user-info__about-text
+          p.user-info__text--fname {{ fullName }}
+          p.user-info__text--job {{ user.position }}
+      .user-info__dots
+        app-dots/
+    .sidebar__tasks
+      .sidebar__tasks-item
+        p.sidebar__tasks-title(@click="updateTask('complete')") {{ user.task.complete }}
+        p.sidebar__tasks-subtitle
+          | Completed Tasks
+      .sidebar__tasks-item
+        p.sidebar__tasks-title(@click="updateTask('open')") {{ user.task.open }}
+        p.sidebar__tasks-subtitle(@click="($router.push({name:'Tasks'}))")
+          | Open Tasks
+    .sidebar__menu
+      nav.menu
+        p.menu__header Menu
+        ul.menu__body
+          li.menu__item
+            a.menu__link(href="#") Home
+          li.menu__item
+            a.menu__link(href="#") My Tasks
+          li.menu__item
+            a.menu__link(href="#") Notifications
+            span.menu__item-count
+              span {{ user.notifications }}
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, computed } from 'vue'
 import AppDots from '@/components/ui/AppDots.vue'
 import AppAvatar from '@/components/ui/AppAvatar.vue'
-import { IUser } from '@/types/user'
+import { useStore } from 'vuex'
+import { userMutationTypes } from '@/store/modules/user'
 
 export default defineComponent({
   name: 'TheSidebar',
-  props: {
-    user: {
-      required: true,
-      type: Object as PropType<IUser>
-    }
+  components: {
+    AppAvatar,
+    AppDots
   },
-  components: { AppAvatar, AppDots },
-  computed: {
-    fullname (): string {
-      return `${this.user.lastname}  ${this.user.firstname}`
+  setup: function () {
+    const store = useStore()
+    const user = computed(() => store.state.user.user)
+    const fullName = computed(() => store.getters['user/fullName'])
+    const updateTask = (type: 'complete' | 'open') => {
+      const revertType = type === 'complete' ? 'open' : 'complete'
+      const messageConfirm = 'Are you sure you want to change the number of tasks?'
+      if (validateTask(type)) {
+        const messageError = `All tasks are ${revertType} !`
+        alert(messageError)
+        return false
+      }
+      if (confirm(messageConfirm)) {
+        store.commit(userMutationTypes.CALCULATE_TASK_INFO, { type, revertType })
+      }
     }
-  },
+    const validateTask = (type: 'complete' | 'open'): boolean => {
+      return !user.value.task[type]
+    }
 
-  methods: {
-    updateCompletedTask (): void {
-      this.$emit('updateTask', 'complete')
-    },
-    updateOpenTask (): void {
-      this.$emit('updateTask', 'open')
+    return {
+      user,
+      fullName,
+      updateTask
     }
   }
 
@@ -85,7 +95,7 @@ export default defineComponent({
   min-height: 100%;
   font-size: 14px;
   color: #ffffff;
-  z-index: 1;
+  z-index: 10;
 
   &--active {
     z-index: 1;
