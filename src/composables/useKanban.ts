@@ -34,7 +34,7 @@ export default function useKanban () {
       alert('You cannot perform this action. If the status of the task is Done, you cannot change the status in Todo')
       return false
     }
-    store.commit(`task/${taskActionTypes.UPDATE_TASK_STATUS}`, { taskId: droppableTask._id, newStatus })
+    store.dispatch(`task/${taskActionTypes.UPDATE_TASK_STATUS}`, { taskId: droppableTask._id, newStatus })
   }
 
   return {

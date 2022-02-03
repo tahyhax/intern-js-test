@@ -8,6 +8,7 @@ export default function useTask () {
   const isTaskShow = ref<boolean>(false)
   const tasks = computed(() => store.state.task.tasks)
   const taskToShow = computed(() => store.state.task.task)
+  store.dispatch(`task/${taskActionTypes.GET_TASKS_LIST}`)
   const handlerTaskDetail = (taskId: string) => {
     store.dispatch(`task/${taskActionTypes.GET_TASK}`, taskId)
     isTaskShow.value = true
@@ -18,7 +19,7 @@ export default function useTask () {
   }
 
   const handlerTaskCreate = (task: ITask) => {
-    store.dispatch(`task/${taskActionTypes.ADD_TASK}`, task)
+    store.dispatch(`task/${taskActionTypes.ADD_TASK}`, { task })
   }
   const handlerTaskUpdate = (task: ITask) => {
     store.dispatch(`task/${taskActionTypes.UPDATE_TASK}`, task)
