@@ -19,6 +19,6 @@ export default createStore({
     task,
     kanban,
     activity
-  },
-  plugins: [VuexLocal.plugin]
+  }
+  // plugins: [VuexLocal.plugin]
 })
