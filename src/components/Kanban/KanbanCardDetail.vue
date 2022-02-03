@@ -50,7 +50,7 @@ vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="card" v
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, toRefs } from 'vue'
 import { ErrorMessage, Field, Form as VeeForm } from 'vee-validate'
 import { object as YObject, string as YString } from 'yup'
 import AppModal from '@/components/ui/AppModal.vue'
@@ -75,6 +75,7 @@ export default defineComponent({
     }
   },
   setup (props, { emit }) {
+    const { card } = toRefs(props)
     const isEditable = ref<boolean>(false)
     const editCard = () => { isEditable.value = true }
     const schema = YObject().shape({
@@ -83,7 +84,7 @@ export default defineComponent({
       date: YString().required().nullable().label('date')
     })
     const onSubmit = (values: ITask): void => {
-      emit('onSubmit', values)
+      emit('onSubmit', { ...values, _id: card.value._id })
     }
     const cancelForm = () => {
       isEditable.value = false

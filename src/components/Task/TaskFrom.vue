@@ -54,7 +54,6 @@ export default defineComponent({
   },
   setup: function (props, { emit }) {
     const taskTemplate = {
-      _id: uuid(),
       title: '',
       text: '',
       date: '',
