@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios'
+import axios from 'axios'
 import initInterceptors from './interceptors'
 
 const instance = axios.create({
