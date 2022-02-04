@@ -2,8 +2,7 @@ import { ref } from 'vue'
 
 export default function useModal () {
   const isActiveForm = ref<boolean>(false)
-  const isTaskShow = ref<boolean>(false)
-  const handlerOpenForm = () => {
+  const handlerOpenForm = (): void => {
     isActiveForm.value = true
   }
   const handlerCloseForm = (): void => {
