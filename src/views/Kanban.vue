@@ -8,7 +8,7 @@ section.kanban
     template(#header)
       | {{ taskToShow.title }}
     template(#body)
-      kanban-card-detail(:card="taskToShow" @onSubmit="handlerTaskUpdate")
+      task-card-detail(:task="taskToShow" @onSubmit="handlerTaskSave")
   .kanban__container
     .kanban__filters.filters
       .filters__item
@@ -36,10 +36,12 @@ import KanbanCardDetail from '@/components/Kanban/KanbanCardDetail.vue'
 import DateRange from '@/components/Form/fitlers/DateRange.vue'
 import useKanban from '@/composables/useKanban'
 import useTask from '@/composables/useTask'
+import TaskCardDetail from '@/components/Task/TaskCardDetail.vue'
 
 export default defineComponent({
   name: 'kanban',
   components: {
+    TaskCardDetail,
     AppModal,
     KanbanCardDetail,
     KanbanColumn,
@@ -48,8 +50,7 @@ export default defineComponent({
   setup: function () {
     // TODO create  component search  and useSearch
     const { kanbanList, searchString, dateRange, handlerDrugTask } = useKanban()
-    const { taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose, handlerTaskUpdate } = useTask()
-
+    const { taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose, handlerTaskSave } = useTask()
     return {
       isTaskShow,
       taskToShow,
@@ -59,7 +60,7 @@ export default defineComponent({
       handlerTaskDetail,
       handlerOnCLose,
       handlerDrugTask,
-      handlerTaskUpdate
+      handlerTaskSave
     }
   }
 })
