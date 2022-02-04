@@ -51,12 +51,12 @@ vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="task" v
 
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, toRefs } from 'vue'
-import { ErrorMessage, Field, Form as VeeForm, useForm } from 'vee-validate'
+import { ErrorMessage, Field, Form as VeeForm } from 'vee-validate'
 import { object as YObject, string as YString } from 'yup'
 import AppModal from '@/components/ui/AppModal.vue'
 import AppButton from '@/components/ui/AppButton.vue'
 import inputDateTime from '@/components/Form/InputDatePicker.vue'
-import { ITask } from '@/types/task'
+import { ETaskStatus, ITask } from '@/types/task'
 
 export default defineComponent({
   name: 'TaskCardDetail',
@@ -88,7 +88,7 @@ export default defineComponent({
       date: YString().required().nullable().label('date')
     })
     const onSubmit = (values: ITask): void => {
-      const data = task.value._id ? { ...values, _id: task.value._id } : values
+      const data = task.value._id ? { ...values, _id: task.value._id } : { ...values, status: ETaskStatus.todo }
       emit('onSubmit', data)
     }
 
