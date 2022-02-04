@@ -1,6 +1,14 @@
 <template lang="pug">
 .task
-  task-form(v-if="isActiveForm" @onSubmit="handlerTaskCreate" @onCloseForm="handlerCloseForm" :isActiveForm="isActiveForm" )
+  app-modal(
+      v-if="isTaskShow || isActiveForm.value"
+      :isActive="isTaskShow"
+      @onClose="handlerCloseForm"
+    )
+      template(#header)
+        | {{ taskToShow.title }}
+      template(#body)
+        task-card-detail(:task="taskToShow" @onSubmit="handlerTaskSave")
   header.task__header
     h3 Today
     .task__header-actions
@@ -14,33 +22,34 @@
         :index="key"
         :key="`task-${task._id}`"
         @onCompleteTask="handlerTaskUpdateStatus"
+        @onEditTask="handlerTaskDetail"
         @onDestroyTask="handlerTaskDelete"
       )
 
 </template>
 <script lang="ts">
-import { computed, defineComponent, onBeforeUpdate, onMounted, ref } from 'vue'
-import TaskForm from '@/components/Task/TaskFrom.vue'
+import { defineComponent, onBeforeUpdate, onMounted, ref } from 'vue'
 import TaskItem from '@/components/Task/TaskItem.vue'
 import AppButton from '@/components/ui/AppButton.vue'
-import { useStore } from 'vuex'
 import useTask from '@/composables/useTask.ts'
+import AppModal from '@/components/ui/AppModal.vue'
+import TaskCardDetail from '@/components/Task/TaskCardDetail.vue'
 
 export default defineComponent({
   name: 'Tasks',
   components: {
-    TaskForm,
+    TaskCardDetail,
+    AppModal,
     TaskItem,
     AppButton
   },
   setup: function () {
-    const store = useStore()
     const isActiveForm = ref(false)
-    const { tasks, handlerTaskCreate, handlerTaskDelete, handlerTaskUpdateStatus } = useTask()
+    const { tasks, taskToShow, isTaskShow, handlerTaskSave, handlerTaskDelete, handlerTaskUpdateStatus, handlerTaskDetail } = useTask()
 
     // поиидее должно вынетстить useModal
     const openForm = () => {
-      isActiveForm.value = true
+      isTaskShow.value = true
     }
     const handlerCloseForm = (): void => {
       isActiveForm.value = false
@@ -72,10 +81,13 @@ export default defineComponent({
     return {
       isActiveForm,
       tasks,
+      taskToShow,
+      isTaskShow,
       setItemRef,
-      handlerTaskCreate,
+      handlerTaskSave,
       handlerTaskDelete,
       handlerTaskUpdateStatus,
+      handlerTaskDetail,
       openForm,
       handlerCloseForm
     }
