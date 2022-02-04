@@ -61,5 +61,8 @@ export default {
   &--danger{
     background-color: #dc3545;
   }
+  &--success{
+    background-color: #28a745;
+}
 }
 </style>

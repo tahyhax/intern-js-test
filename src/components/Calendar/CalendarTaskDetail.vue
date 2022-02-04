@@ -20,7 +20,7 @@ vee-form(:initial-values="card" class="form")
       input-date-time(
         name="date"
         v-bind="field"
-        isDisabled="true"
+        :isDisabled="true"
       )
   .form__field-wrap
     label.form__label Text

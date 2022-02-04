@@ -9,8 +9,10 @@
           p {{ task.text }}
     .task-item__time {{ task.date }}
   .task-item__actions
-    app-button.task-item__button.button--primary(v-if="isTodo(task.status)" @click="completeTask(task._id)") Complete
+    app-button.task-item__button.button--success(v-if="isTodo(task.status)" @click="completeTask(task._id)") Complete
+    app-button.task-item__button.button--primary(@click="editTask(task._id)") Edit
     app-button.task-item__button.button--danger(@click="destroyTask(task._id)") Delete
+
 </template>
 
 <script lang="ts">
@@ -41,12 +43,15 @@ export default defineComponent({
     const destroyTask = (taskId: string):void => {
       emit('onDestroyTask', taskId)
     }
+    const editTask = (taskId: string):void => {
+      emit('onEditTask', taskId)
+    }
 
     const isTodo = (status: string): boolean => {
       return status !== ETaskStatus.done
     }
 
-    return { completeTask, destroyTask, isTodo }
+    return { completeTask, destroyTask, editTask, isTodo }
   }
 })
 </script>

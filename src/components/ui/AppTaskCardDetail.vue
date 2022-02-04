@@ -1,5 +1,5 @@
 <template lang="pug">
-vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="card" v-slot="{ errors, isSubmitting, handleReset, meta}" class="form" ref="form" )
+vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="task" v-slot="{ errors, isSubmitting, handleReset, meta}" class="form" ref="form" )
   .form__field-wrap
     label.form__label Title
     Field(
@@ -43,23 +43,23 @@ vee-form(@submit="onSubmit" :validation-schema="schema" :initial-values="card" v
     )
     ErrorMessage(name="text" as="div" class="form__error")
   .form__actions
-      app-button.form__button.button--primary(v-if="!isEditable" @click="editCard") Edit
-      app-button.form__button.button--secondary(v-if="isEditable" @click="cancelForm") Cancel
-      app-button.form__button.button--primary(v-if="meta.dirty && isEditable" :disabled="isSubmitting") Save
+      app-button.form__button.button--primary(v-if="!canEdit && !!task._id" @click="editCard" type="button") Edit
+      app-button.form__button.button--secondary(v-if="canEdit" @click="cancelForm" type="button") Cancel
+      app-button.form__button.button--primary(v-if="(meta.dirty && canEdit) || !task._id" :disabled="isSubmitting") Save
 
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
+import { computed, defineComponent, PropType, ref, toRefs } from 'vue'
 import { ErrorMessage, Field, Form as VeeForm } from 'vee-validate'
 import { object as YObject, string as YString } from 'yup'
 import AppModal from '@/components/ui/AppModal.vue'
 import AppButton from '@/components/ui/AppButton.vue'
 import inputDateTime from '@/components/Form/InputDatePicker.vue'
-import { ITask } from '@/types/task'
+import { ETaskStatus, ITask } from '@/types/task'
 
 export default defineComponent({
-  name: 'KanbanCardDetail',
+  name: 'TaskCardDetail',
   components: {
     AppModal,
     AppButton,
@@ -69,27 +69,30 @@ export default defineComponent({
     inputDateTime
   },
   props: {
-    card: {
+    task: {
       required: true,
       type: Object as PropType<ITask>
     }
   },
   setup (props, { emit }) {
-    const isEditable = ref<boolean>(false)
-    const editCard = () => { isEditable.value = true }
+    const { task } = toRefs(props)
+    const canEdit = ref<boolean>(false)
+    const isEditable = computed(() => canEdit.value || !task.value._id)
+    const editCard = () => { canEdit.value = true }
+    const cancelForm = () => {
+      canEdit.value = false
+    }
     const schema = YObject().shape({
       title: YString().required().label('title'),
       text: YString().required().label('text'),
       date: YString().required().nullable().label('date')
     })
     const onSubmit = (values: ITask): void => {
-      emit('onSubmit', values)
-    }
-    const cancelForm = () => {
-      isEditable.value = false
+      const data = task.value._id ? { ...values, _id: task.value._id } : { ...values, status: ETaskStatus.todo }
+      emit('onSubmit', data)
     }
 
-    return { schema, onSubmit, cancelForm, isEditable, editCard }
+    return { schema, onSubmit, cancelForm, isEditable, canEdit, editCard }
   }
 
 })

@@ -1,7 +1,8 @@
 import { ITask } from '@/types/task'
+import { computed, Ref } from 'vue'
 
-export default function useCalendar (tasksList) {
-  const tasks = tasksList.map((task: ITask, key) => {
+export default function useCalendar (tasksList: Ref<ITask[]>) {
+  const tasks = computed(() => tasksList.value.map((task: ITask, key) => {
     return {
       key: key,
       customData: {
@@ -12,7 +13,7 @@ export default function useCalendar (tasksList) {
       },
       dates: new Date(task.createdAt)
     }
-  })
+  }))
 
   return { tasks }
 }

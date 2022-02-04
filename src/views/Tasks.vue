@@ -1,10 +1,18 @@
 <template lang="pug">
 .task
-  task-form(v-if="isActiveForm" @onSubmit="handlerTaskCreate" @onCloseForm="handlerCloseForm" :isActiveForm="isActiveForm" )
+  app-modal(
+      v-if="isActiveForm"
+      :isActive="!!taskToShow"
+      @onClose="handlerClose"
+    )
+      template(#header)
+        | {{ taskToShow.title }}
+      template(#body)
+        app-task-card-detail(:task="taskToShow" @onSubmit="handlerFormSubmit")
   header.task__header
     h3 Today
     .task__header-actions
-      app-button.button--primary(@click="openForm")
+      app-button.button--primary(@click="handlerOpenForm")
         | New task
   .task__body
     transition-group(class="task__list" tag="div" name="bounce")
@@ -14,38 +22,32 @@
         :index="key"
         :key="`task-${task._id}`"
         @onCompleteTask="handlerTaskUpdateStatus"
+        @onEditTask="handlerTaskPreview"
         @onDestroyTask="handlerTaskDelete"
       )
 
 </template>
 <script lang="ts">
-import { computed, defineComponent, onBeforeUpdate, onMounted, ref } from 'vue'
-import TaskForm from '@/components/Task/TaskFrom.vue'
+import { defineComponent, onBeforeUpdate, onMounted } from 'vue'
 import TaskItem from '@/components/Task/TaskItem.vue'
 import AppButton from '@/components/ui/AppButton.vue'
-import { useStore } from 'vuex'
 import useTask from '@/composables/useTask.ts'
+import useModal from '@/composables/useModal'
+import AppModal from '@/components/ui/AppModal.vue'
+import AppTaskCardDetail from '@/components/ui/AppTaskCardDetail.vue'
+import { ITask } from '@/types/task'
 
 export default defineComponent({
   name: 'Tasks',
   components: {
-    TaskForm,
+    AppTaskCardDetail,
+    AppModal,
     TaskItem,
     AppButton
   },
   setup: function () {
-    const store = useStore()
-    const isActiveForm = ref(false)
-    const { tasks, handlerTaskCreate, handlerTaskDelete, handlerTaskUpdateStatus } = useTask()
-
-    // поиидее должно вынетстить useModal
-    const openForm = () => {
-      isActiveForm.value = true
-    }
-    const handlerCloseForm = (): void => {
-      isActiveForm.value = false
-    }
-    // ----------------
+    const { tasks, taskToShow, handlerTaskSave, handlerTaskDelete, handlerTaskUpdateStatus, handlerTaskDetail, clearTaskToShow } = useTask()
+    const { isActiveForm, handlerOpenForm, handlerCloseForm } = useModal()
 
     let itemRefs: HTMLElement[] = []
     const setItemRef = (el: any) => {
@@ -69,15 +71,31 @@ export default defineComponent({
       itemRefs = []
     })
 
+    const handlerFormSubmit = (task:ITask) => {
+      handlerTaskSave(task)
+      handlerCloseForm()
+    }
+
+    const handlerTaskPreview = (id) => {
+      handlerTaskDetail(id)
+      handlerOpenForm()
+    }
+    const handlerClose = () => {
+      clearTaskToShow()
+      handlerCloseForm()
+    }
+
     return {
       isActiveForm,
       tasks,
+      taskToShow,
       setItemRef,
-      handlerTaskCreate,
+      handlerFormSubmit,
+      handlerTaskPreview,
       handlerTaskDelete,
       handlerTaskUpdateStatus,
-      openForm,
-      handlerCloseForm
+      handlerOpenForm,
+      handlerClose
     }
   }
 })

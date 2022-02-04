@@ -1,8 +1,8 @@
 <template lang="pug">
 app-modal(
-  v-if="isTaskShow"
-  :isActive="isTaskShow"
-  @onClose="handlerOnCLose"
+  v-if="isActiveForm"
+  :isActive="!!taskToShow"
+  @onClose="handlerCloseForm"
 )
   template(#header)
     | {{ taskToShow.title }}
@@ -24,7 +24,7 @@ app-modal(
             :key="attr.key"
             class="calendar__event-title"
             :class="attr.customData.class"
-            @click="handlerTaskDetail(attr.customData._id)"
+            @click="handlerTaskPreview(attr.customData._id)"
         ) {{ attr.customData.title }}
 </template>
 
@@ -35,6 +35,7 @@ import AppModal from '../components/ui/AppModal'
 import CalendarTaskDetail from '../components/Calendar/CalendarTaskDetail'
 import useCalendar from '../composables/useCalendar'
 import useTask from '../composables/useTask'
+import useModal from '../composables/useModal'
 
 export default defineComponent({
   components: { 'v-calendar': Calendar, AppModal, CalendarTaskDetail },
@@ -42,10 +43,14 @@ export default defineComponent({
     const calendarMasks = {
       weekdays: 'WWW'
     }
-    const { tasks: tasksList, taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose } = useTask()
-
-    const { tasks } = useCalendar(tasksList.value)
-    return { calendarMasks, tasks, taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose }
+    const { tasks: tasksList, taskToShow, handlerTaskDetail } = useTask()
+    const { tasks } = useCalendar(tasksList)
+    const { isActiveForm, handlerOpenForm, handlerCloseForm } = useModal()
+    const handlerTaskPreview = (id) => {
+      handlerTaskDetail(id)
+      handlerOpenForm()
+    }
+    return { calendarMasks, tasks, taskToShow, isActiveForm, handlerTaskPreview, handlerCloseForm }
   }
 })
 </script>
