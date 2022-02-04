@@ -44,7 +44,7 @@ export default defineComponent({
     }
     const { tasks: tasksList, taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose } = useTask()
 
-    const { tasks } = useCalendar(tasksList.value)
+    const { tasks } = useCalendar(tasksList)
     return { calendarMasks, tasks, taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose }
   }
 })
