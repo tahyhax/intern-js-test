@@ -1,7 +1,7 @@
 import { useStore } from 'vuex'
 import { computed, ref } from 'vue'
 import { ETaskStatus, ITask } from '@/types/task'
-import { taskActionTypes } from '@/store/modules/task.ts'
+import { taskActionTypes, taskMutationTypes } from '@/store/modules/task.ts'
 
 export default function useTask () {
   const store = useStore()
@@ -11,6 +11,9 @@ export default function useTask () {
 
   const handlerTaskDetail = (taskId: string) => {
     store.dispatch(`task/${taskActionTypes.GET_TASK}`, taskId)
+  }
+  const clearTaskToShow = () => {
+    store.commit(`task/${taskMutationTypes.CLEAR_TASK}`)
   }
 
   const handlerTaskSave = (task: ITask) => {
@@ -36,6 +39,7 @@ export default function useTask () {
   return {
     tasks,
     taskToShow,
+    clearTaskToShow,
     handlerTaskDetail,
     handlerTaskSave,
     handlerTaskDelete,

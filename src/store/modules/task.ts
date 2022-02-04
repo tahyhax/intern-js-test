@@ -13,6 +13,7 @@ export enum taskActionTypes {
 export enum taskMutationTypes {
   GET_TASKS_LIST = 'GET_TASKS_LIST',
   GET_TASK = 'GET_TASK',
+  CLEAR_TASK = 'CLEAR_TASK',
   ADD_TASK = 'ADD_TASK',
   UPDATE_TASK = 'UPDATE_TASK',
   UPDATE_TASK_STATUS = 'UPDATE_TASK_STATUS',
@@ -35,6 +36,9 @@ const task = {
     },
     [taskMutationTypes.GET_TASK] (state: ITasksStore, payload: ITask) {
       state.task = payload
+    },
+    [taskMutationTypes.CLEAR_TASK] (state: ITasksStore) {
+      state.task = {} as ITask
     },
     [taskMutationTypes.UPDATE_TASK] (state: ITasksStore, payload: ITask) {
       state.tasks[state.tasks.findIndex((item: ITask) => item._id === payload._id)] = payload

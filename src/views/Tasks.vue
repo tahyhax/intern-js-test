@@ -3,7 +3,7 @@
   app-modal(
       v-if="isActiveForm"
       :isActive="!!taskToShow"
-      @onClose="handlerCloseForm"
+      @onClose="handlerClose"
     )
       template(#header)
         | {{ taskToShow.title }}
@@ -46,7 +46,7 @@ export default defineComponent({
     AppButton
   },
   setup: function () {
-    const { tasks, taskToShow, handlerTaskSave, handlerTaskDelete, handlerTaskUpdateStatus, handlerTaskDetail } = useTask()
+    const { tasks, taskToShow, handlerTaskSave, handlerTaskDelete, handlerTaskUpdateStatus, handlerTaskDetail, clearTaskToShow } = useTask()
     const { isActiveForm, handlerOpenForm, handlerCloseForm } = useModal()
 
     let itemRefs: HTMLElement[] = []
@@ -80,6 +80,10 @@ export default defineComponent({
       handlerTaskDetail(id)
       handlerOpenForm()
     }
+    const handlerClose = () => {
+      clearTaskToShow()
+      handlerCloseForm()
+    }
 
     return {
       isActiveForm,
@@ -91,7 +95,7 @@ export default defineComponent({
       handlerTaskDelete,
       handlerTaskUpdateStatus,
       handlerOpenForm,
-      handlerCloseForm
+      handlerClose
     }
   }
 })
