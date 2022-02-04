@@ -18,10 +18,13 @@ export default function useTask () {
     isTaskShow.value = false
   }
 
-  const handlerTaskCreate = (task: ITask) => {
+  const handlerTaskSave = (task: ITask) => {
+    !task._id ? createTask(task) : updateTask(task)
+  }
+  const createTask = (task: ITask) => {
     store.dispatch(`task/${taskActionTypes.ADD_TASK}`, { task })
   }
-  const handlerTaskUpdate = (task: ITask) => {
+  const updateTask = (task: ITask) => {
     store.dispatch(`task/${taskActionTypes.UPDATE_TASK}`, task)
   }
   const handlerTaskDelete = (taskId: string) => {
@@ -37,8 +40,7 @@ export default function useTask () {
     isTaskShow,
     handlerTaskDetail,
     handlerOnCLose,
-    handlerTaskCreate,
-    handlerTaskUpdate,
+    handlerTaskSave,
     handlerTaskDelete,
     handlerTaskUpdateStatus
   }
