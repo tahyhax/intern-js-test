@@ -1,14 +1,14 @@
 <template lang="pug">
 section.kanban
   app-modal(
-    v-if="isTaskShow"
-    :isActive="isTaskShow"
-    @onClose="handlerOnCLose"
+    v-if="isActiveForm"
+    :isActive="!!taskToShow"
+    @onClose="handlerCloseForm"
   )
     template(#header)
       | {{ taskToShow.title }}
     template(#body)
-      task-card-detail(:task="taskToShow" @onSubmit="handlerTaskSave")
+      app-task-card-detail(:task="taskToShow" @onSubmit="handlerFormSubmit")
   .kanban__container
     .kanban__filters.filters
       .filters__item
@@ -24,7 +24,7 @@ section.kanban
         @onDrugTask="handlerDrugTask"
         :column="column"
         :key="`kanban-${key}`"
-        @onTaskDetail="handlerTaskDetail"
+        @onTaskDetail="handlerTaskPreview"
         )
 </template>
 
@@ -32,35 +32,48 @@ section.kanban
 import { defineComponent } from 'vue'
 import KanbanColumn from '@/components/Kanban/KanbanColumn.vue'
 import AppModal from '@/components/ui/AppModal.vue'
-import KanbanCardDetail from '@/components/Kanban/KanbanCardDetail.vue'
 import DateRange from '@/components/Form/fitlers/DateRange.vue'
 import useKanban from '@/composables/useKanban'
 import useTask from '@/composables/useTask'
-import TaskCardDetail from '@/components/Task/TaskCardDetail.vue'
+import AppTaskCardDetail from '@/components/ui/AppTaskCardDetail.vue'
+import useModal from '@/composables/useModal'
+import { ITask } from '@/types/task'
 
 export default defineComponent({
   name: 'kanban',
   components: {
-    TaskCardDetail,
+    AppTaskCardDetail,
     AppModal,
-    KanbanCardDetail,
     KanbanColumn,
     DateRange
   },
   setup: function () {
     // TODO create  component search  and useSearch
     const { kanbanList, searchString, dateRange, handlerDrugTask } = useKanban()
-    const { taskToShow, isTaskShow, handlerTaskDetail, handlerOnCLose, handlerTaskSave } = useTask()
+    const { taskToShow, handlerTaskDetail, handlerTaskSave } = useTask()
+    const { isActiveForm, handlerOpenForm, handlerCloseForm } = useModal()
+
+    const handlerFormSubmit = (task:ITask) => {
+      handlerTaskSave(task)
+      handlerCloseForm()
+    }
+
+    const handlerTaskPreview = (id) => {
+      handlerTaskDetail(id)
+      handlerOpenForm()
+    }
     return {
-      isTaskShow,
       taskToShow,
       searchString,
       dateRange,
       kanbanList,
-      handlerTaskDetail,
-      handlerOnCLose,
+      isActiveForm,
+      handlerFormSubmit,
+      handlerTaskPreview,
+      handlerCloseForm,
       handlerDrugTask,
-      handlerTaskSave
+      handlerTaskSave,
+      handlerOpenForm
     }
   }
 })
