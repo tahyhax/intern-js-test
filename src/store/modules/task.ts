@@ -55,7 +55,7 @@ const task = {
         console.log(error)
       }
     },
-    async [taskActionTypes.GET_TASK] ({ state, commit }, taskId: string) {
+    async [taskActionTypes.GET_TASK] ({ state: ITasksStore, commit }, taskId: string) {
       try {
         const task = await TaskService.getById(taskId)
         commit(taskMutationTypes.GET_TASK, task)
@@ -63,7 +63,7 @@ const task = {
         console.log(error)
       }
     },
-    async [taskActionTypes.UPDATE_TASK] ({ state, commit }, task: ITask) {
+    async [taskActionTypes.UPDATE_TASK] ({ state: ITasksStore, commit }, task: ITask) {
       try {
         const taskUpdated = await TaskService.update(task._id, task)
         commit(taskMutationTypes.UPDATE_TASK, taskUpdated)
@@ -71,7 +71,8 @@ const task = {
         console.log(error)
       }
     },
-    async [taskActionTypes.ADD_TASK] ({ state, commit }, payload: ITask) {
+
+    async [taskActionTypes.ADD_TASK] ({ state: ITasksStore, commit }, payload: ITask) {
       try {
         const task = await TaskService.add(payload)
         commit(taskMutationTypes.ADD_TASK, task)
@@ -79,7 +80,7 @@ const task = {
         console.log(error)
       }
     },
-    async [taskActionTypes.DELETE_TASK] ({ state, commit }, taskId: string) {
+    async [taskActionTypes.DELETE_TASK] ({ state: ITasksStore, commit }, taskId: string) {
       try {
         const tasks = await TaskService.delete(taskId)
         commit(taskMutationTypes.GET_TASKS_LIST, tasks)
@@ -87,7 +88,7 @@ const task = {
         console.log(error)
       }
     },
-    async [taskActionTypes.UPDATE_TASK_STATUS] ({ state, commit }, payload: { taskId: string, newStatus: ETaskStatus }) {
+    async [taskActionTypes.UPDATE_TASK_STATUS] ({ state: ITasksStore, commit }, payload: { taskId: string, newStatus: ETaskStatus }) {
       try {
         const task = await TaskService.updateStatus(payload.taskId, payload.newStatus)
         commit(taskMutationTypes.UPDATE_TASK_STATUS, task)
